@@ -1,73 +1,47 @@
-/胖东来|于东来/ => 胖东来
+# ==========================================
+# 1. 医药研发与监管 (Pharma & Regulation)
+# ==========================================
 
-/DeepSeek|梁文锋/i => DeepSeek
+# 优化：加入ADC、IND/NDA等高频研发词汇
+/肿瘤治疗|靶点|新药|原研药|药物研发|ADC|抗体偶联|IND|NDA|Biomarker|生物标志物/i => 医药研发
 
-/华为|鸿蒙|HarmonyOS|任正非/i => 华为
+# 优化：加入SAS、统计分析计划(SAP)、以及真实世界研究(RWE)
+/临床试验|Clinical Trial|RCT|Study Design|样本量|Sample Size|Endpoints|终点|SAS|SAP|RWE|Real World Evidence/i => 临床试验
 
-/比亚迪|王传福/ => 比亚迪
+# 优化：加入药审中心中文全称
+/CDE|NMPA|药监局|药审中心|CFDA/i => 国内监管机构
 
-/大疆|\bDJI\b/i => 大疆
+# 优化：将FDA与EMA(欧洲)、ICH(国际协调)合并，关注全球合规
+/FDA|EMA|ICH|PMDA|21 CFR Part 11|GCP/i => 国际监管标准
 
-/宇树|王兴兴/ => 宇树机器人
+# 新增：临床数据交换标准（您的核心业务）
+/CDISC|SDTM|ADaM|SEND|Define\.xml|ODM|EDC/i => CDISC数据标准
 
-/智元|灵犀|稚晖君|彭志辉/ => 智元机器人
+# ==========================================
+# 2. 数据科学与编程 (Data Science & Dev)
+# ==========================================
 
-/黑神话|冯骥/ => 黑神话悟空
+# 优化：R语言极易误判，增加\b词边界，并加入Posit生态(Quarto/Shiny/Tidyverse)
+/\bR\b|\bR Language\b|R Studio|RStudio|Positron|Posit|Tidyverse|Ggplot2|Shiny|Quarto/i => R语言生态
 
-/影之刃零|梁其伟/ => 影之刃零
+# 优化：Python在数据分析中的生态
+/\bPython\b|Pandas|Polars|Numpy|Jupyter|PyTorch|Scikit-learn/i => Python数据栈
 
-/哪吒|杨宇/ => 哪吒电影
-!车
-!餐
+# 优化：具体化 AI IDE，加入目前最火的 Cursor 和 Windsurf
+/AI IDE|Cursor|Windsurf|Copilot|Cline|Bolt\.new|Lovable/i => AI辅助编程
 
-/三体|流浪地球|刘慈欣|郭帆/ => 三体/流浪地球
+# 新增：独立开发技术栈
+/Next\.js|React|Tailwind|Supabase|Vercel|Stripe|SaaS|Indie Hacker|MicroSaaS/i => 独立开发
 
-申奥
+# ==========================================
+# 3. AI 前沿与硬件 (AI & Hardware)
+# ==========================================
 
-/京东|刘强东/ => 京东
+# 归类：大模型技术
+/LLM|Large Language Model|Transformer|GPT-4|Claude|Llama|DeepSeek|Qwen/i => 大模型
 
-/字节|bytedance|张一鸣/i => 字节跳动
+# 归类：AI应用技术（RAG与Agent是目前的落地重点）
+/RAG|Retrieval Augmented|Vector DB|Embedding|Agent|Agentic|LangChain/i => AI应用架构
 
-/特斯拉|马斯克/ => 特斯拉
-
-/微软|\bMicrosoft\b/i => 微软
-
-/英伟达|\bNVIDIA\b|黄仁勋/i => 英伟达
-
-/\bAMD\b/i => AMD
-
-/谷歌|\bgoogle\b|\bgemini\b|\bdeepMind\b/i => 谷歌
-
-/\bchatgpt\b|\bopenai\b|\bsora\b/i => OpenAI
-
-/\bclaude\b|Anthropic/i => Claude
-
-/\biphone\b|\bipad\b|\bmac\b|\bios\b/i => 苹果产品
-
-/(?<![a-zA-Z])ai(?![a-zA-Z])/i => AI 相关
-人工智能
-
-自动驾驶
-
-机器人
-
-国产
-中国
-
-美国
-日本
-韩国
-
-芯片
-光刻机
-
-科技
-
-核能
-
-水电站
-雅鲁藏布江
-
-新质生产力
-
-/月球|登月|火星|宇宙|飞船|航空/ => 航天航空
+# 归类：硬件与算力（关注本地部署和显卡）
+/NVIDIA|GPU|CUDA|RTX|H100|4090|Mac Studio|Apple Silicon|M4 Chip|NAS|Home Lab/i => 硬件与算力
