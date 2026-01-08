@@ -1,47 +1,92 @@
-# ==========================================
-# 1. 医药研发与监管 (Pharma & Regulation)
-# ==========================================
+# ==============================================================================
+# BLOCK 1: 临床数据科学与医药研发 (Clinical Domain & Regs)
+# 核心：不仅关注药，更关注数据标准、统计方法和合规性
+# ==============================================================================
 
-# 优化：加入ADC、IND/NDA等高频研发词汇
-/肿瘤治疗|靶点|新药|原研药|药物研发|ADC|抗体偶联|IND|NDA|Biomarker|生物标志物/i => 医药研发
+# 监管与合规：覆盖中、美、欧及国际协调组织，加入隐私法规(GDPR/HIPAA)
+/CDE|NMPA|药审中心|FDA|EMA|ICH|PMDA|GCP|21 CFR Part 11|HIPAA|GDPR|Helsinki/i => 监管法规
 
-# 优化：加入SAS、统计分析计划(SAP)、以及真实世界研究(RWE)
-/临床试验|Clinical Trial|RCT|Study Design|样本量|Sample Size|Endpoints|终点|SAS|SAP|RWE|Real World Evidence/i => 临床试验
+# 数据标准：除了 CDISC，加入真实世界数据标准 OMOP 和互操作性标准 FHIR
+/CDISC|SDTM|ADaM|SEND|Define\.xml|ODM|OMOP|OHDSI|FHIR|HL7|DICOM/i => 数据标准
 
-# 优化：加入药审中心中文全称
-/CDE|NMPA|药监局|药审中心|CFDA/i => 国内监管机构
+# 研发与试验设计：涵盖创新疗法(ADC/CGT)和新型试验设计(适应性设计)
+/Clinical Trial|RCT|Adaptive Design|Basket Trial|Umbrella Trial|ADC|CGT|Gene Therapy|Immunotherapy|Biomarker|伴随诊断/i => 研发设计
 
-# 优化：将FDA与EMA(欧洲)、ICH(国际协调)合并，关注全球合规
-/FDA|EMA|ICH|PMDA|21 CFR Part 11|GCP/i => 国际监管标准
+# 统计学方法：关注贝叶斯、生存分析及因果推断（真实世界研究核心）
+/Biostatistics|Survival Analysis|Kaplan-Meier|Cox Model|Bayesian|Causal Inference|Propensity Score|Meta-analysis|Subgroup Analysis/i => 生物统计
 
-# 新增：临床数据交换标准（您的核心业务）
-/CDISC|SDTM|ADaM|SEND|Define\.xml|ODM|EDC/i => CDISC数据标准
+# 临床系统：EDC, CTMS, ePRO 等基础设施
+/EDC|Rave|Medidata|RedCap|CTMS|ePRO|eCOA|PV|Pharmacovigilance/i => 临床系统
 
-# ==========================================
-# 2. 数据科学与编程 (Data Science & Dev)
-# ==========================================
+# ==============================================================================
+# BLOCK 2: 数据技术栈 (Data Tech Stack)
+# 核心：R与Python的双修，以及正在崛起的高性能工具(DuckDB/Polars)
+# ==============================================================================
 
-# 优化：R语言极易误判，增加\b词边界，并加入Posit生态(Quarto/Shiny/Tidyverse)
-/\bR\b|\bR Language\b|R Studio|RStudio|Positron|Posit|Tidyverse|Ggplot2|Shiny|Quarto/i => R语言生态
+# R生态进阶：包含环境管理(renv)、管道操作(targets)及可视化
+/\bR\b|\bR Language\b|RStudio|Posit|Positron|Tidyverse|Dplyr|Ggplot2|Shiny|Quarto|Renv|Targets|Bioconductor/i => R语言生态
 
-# 优化：Python在数据分析中的生态
-/\bPython\b|Pandas|Polars|Numpy|Jupyter|PyTorch|Scikit-learn/i => Python数据栈
+# Python数据栈：加入高性能库 Polars 和现代构建工具
+/\bPython\b|Pandas|Polars|NumPy|SciPy|Scikit-learn|PyTorch|TensorFlow|Jupyter|Poetry|Conda|Ruff/i => Python数据栈
 
-# 优化：具体化 AI IDE，加入目前最火的 Cursor 和 Windsurf
-/AI IDE|Cursor|Windsurf|Copilot|Cline|Bolt\.new|Lovable/i => AI辅助编程
+# 数据库与数仓：关注本地分析神器 DuckDB 和现代数据栈
+/SQL|PostgreSQL|DuckDB|SQLite|Snowflake|Databricks|Data Lake|Parquet|Arrow/i => 数据存储
 
-# 新增：独立开发技术栈
-/Next\.js|React|Tailwind|Supabase|Vercel|Stripe|SaaS|Indie Hacker|MicroSaaS/i => 独立开发
+# ==============================================================================
+# BLOCK 3: AI 人工智能 (AI, LLM & Engineering)
+# 核心：区分“模型本身”、“开发框架”和“本地部署技术”
+# ==============================================================================
 
-# ==========================================
-# 3. AI 前沿与硬件 (AI & Hardware)
-# ==========================================
+# 前沿大模型：覆盖闭源(GPT/Claude)与开源(Llama/DeepSeek/Mistral)
+/LLM|Transformer|GPT-4|GPT-5|Claude|Gemini|Llama|Mistral|DeepSeek|Qwen|Grok|Mixture of Experts|MoE/i => 大模型
 
-# 归类：大模型技术
-/LLM|Large Language Model|Transformer|GPT-4|Claude|Llama|DeepSeek|Qwen/i => 大模型
+# AI工程化：RAG、Agent、提示词工程
+/RAG|Retrieval Augmented|LangChain|LlamaIndex|Vector DB|Pinecone|Chroma|Embedding|Prompt Engineering|Fine-tuning|LoRA|RLHF/i => AI工程化
 
-# 归类：AI应用技术（RAG与Agent是目前的落地重点）
-/RAG|Retrieval Augmented|Vector DB|Embedding|Agent|Agentic|LangChain/i => AI应用架构
+# AI Agent与自动化：自主智能体框架
+/Agent|Agentic|AutoGPT|CrewAI|LangGraph|Multi-agent|Copilot/i => AI智能体
 
-# 归类：硬件与算力（关注本地部署和显卡）
-/NVIDIA|GPU|CUDA|RTX|H100|4090|Mac Studio|Apple Silicon|M4 Chip|NAS|Home Lab/i => 硬件与算力
+# 本地AI与量化：作为硬件党，这是你如何把大模型跑在自己显卡上的关键
+/Ollama|LM Studio|vLLM|GGUF|AWQ|GPTQ|Quantization|Local LLM|Whisper|Stable Diffusion|Flux|Midjourney/i => 本地AI生成
+
+# ==============================================================================
+# BLOCK 4: 独立开发与全栈 (Indie Dev & Fullstack)
+# 核心：快速构建产品的工具链，从前端到变现
+# ==============================================================================
+
+# 现代前端与UI：Shadcn是目前最火的组件库，Tailwind是标配
+/React|Next\.js|Vue|Nuxt|Svelte|SolidJS|Tailwind|Shadcn|Framer Motion|Three\.js/i => 前端技术
+
+# 后端与BaaS：独立开发者偏爱的“后端即服务”
+/Node\.js|TypeScript|Bun|Deno|Supabase|Firebase|Appwrite|PocketBase|Prisma|TRPC/i => 后端服务
+
+# 移动端开发：跨平台技术
+/Flutter|React Native|SwiftUI|Expo|Kotlin/i => 移动开发
+
+# 商业化与增长：独立开发的终极目标（MRR/SaaS）
+/SaaS|MicroSaaS|Indie Hacker|Build in Public|Stripe|Lemon Squeezy|Paddle|SEO|Product Hunt|MRR|ARR/i => 商业化
+
+# ==============================================================================
+# BLOCK 5: 开发者工具 (Dev Environment)
+# 核心：编辑器战国时代（VS Code vs Cursor vs Zed）
+# ==============================================================================
+
+# 现代IDE：Cursor(AI原生), Zed(高性能), Neovim(极客)
+/VS Code|VSCode|Cursor|Windsurf|Zed Editor|Neovim|IntelliJ|Fleet|Kiro|Trae|Google Antigravity/i => 开发工具
+
+# 容器与运维：Docker是基础
+/Docker|Kubernetes|K8s|Podman|CI\/CD|GitHub Actions|Vercel|Netlify|Cloudflare/i => 运维部署
+
+# ==============================================================================
+# BLOCK 6: 计算机硬件与极客装备 (Hardware & Home Lab)
+# 核心：生产力工具(GPU) + 玩具(树莓派/NAS) + 芯片架构
+# ==============================================================================
+
+# 显卡与算力：关注N卡生态和国产算力
+/NVIDIA|GPU|CUDA|RTX 4090|RTX 5090|H100|H800|Blackwell|AMD ROCm|Ascend|昇腾/i => 显卡算力
+
+# 芯片架构：Apple Silicon 和 RISC-V 是热点
+/Apple Silicon|M3 Max|M4 Chip|Mac Studio|Snapdragon X|ARM|RISC-V|Intel Core|Ryzen/i => 芯片架构
+
+# 家庭实验室与网络：NAS玩家关键词
+/Home Lab|Homelab|NAS|Synology|Unraid|TrueNAS|Raspberry Pi|Orange Pi|Mini PC|N100|WiFi 7|10GbE/i => 极客硬件
