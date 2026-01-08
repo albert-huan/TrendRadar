@@ -16,7 +16,7 @@
 /Biostatistics|Survival Analysis|Kaplan-Meier|Cox Model|Bayesian|Causal Inference|Propensity Score|Meta-analysis|Subgroup Analysis/i => 生物统计
 
 # 临床系统：EDC, CTMS, ePRO 等基础设施
-/EDC|Rave|Medidata|RedCap|CTMS|ePRO|eCOA|PV|Pharmacovigilance/i => 临床系统
+/EDC|Rave|Medidata|RedCap|CTMS|ePRO|eCOA|\bPV\b|Pharmacovigilance/i => 临床系统
 
 # ==============================================================================
 # BLOCK 2: 数据技术栈 (Data Tech Stack)
