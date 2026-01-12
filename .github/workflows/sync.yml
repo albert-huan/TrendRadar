@@ -16,6 +16,6 @@ jobs:
       - name: actions-template-sync
         uses: AndreasAugustin/actions-template-sync@v2
         with:
-          source_repo_path: <sansan0>/<TrendRadar> # 例如: facebook/react
+          source_repo_path: sansan0/TrendRadar # 例如: facebook/react
           upstream_branch: master # 原仓库分支
           pr_labels: sync_template # 自动创建 PR 的标签
