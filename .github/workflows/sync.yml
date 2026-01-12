@@ -13,7 +13,7 @@ permissions:
 env:
   TEMPLATE_REPO: "https://github.com/sansan0/TrendRadar.git"
   # 如果模板默认分支不是 main，可以在 workflow_dispatch 时覆盖或修改这里
-  TEMPLATE_BRANCH: "main"
+  TEMPLATE_BRANCH: "master"
 
 jobs:
   sync:
@@ -42,7 +42,7 @@ jobs:
           # base branch (your repo default)
           BASE_BRANCH=$(git remote show origin | sed -n 's/.*HEAD branch: //p' || true)
           if [ -z "$BASE_BRANCH" ]; then
-            BASE_BRANCH="main"
+            BASE_BRANCH="master"
           fi
           echo "BASE_BRANCH=$BASE_BRANCH" >> $GITHUB_ENV
 
