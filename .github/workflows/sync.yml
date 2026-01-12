@@ -8,13 +8,6 @@ on:
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
-    
-    # 这里的 permissions 其实可以删掉，因为下面的 PAT 权限更高，
-    # 但保留着也没坏处，作为双重保险。
-    permissions:
-      contents: write
-      pull-requests: write
-      workflows: write 
 
     steps:
       - name: Checkout
