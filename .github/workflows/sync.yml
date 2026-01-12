@@ -13,7 +13,6 @@ jobs:
     permissions:
       contents: write       # 允许写入代码 (git push)
       pull-requests: write  # 允许创建 PR
-      workflows: write      # ➕ 允许修改工作流文件 (.github/workflows/*.yml)
     # ➕➕➕ 结束 ➕➕➕
 
     steps:
