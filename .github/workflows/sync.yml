@@ -1,27 +1,101 @@
-name: Sync from Template
+name: Sync from template sansan0/TrendRadar
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *"
+    # 每周一次（周日 00:00 UTC），可按需修改或删除
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  repo-sync:
+  sync:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout repository (full history)
         uses: actions/checkout@v4
-
-      - name: actions-template-sync
-        uses: AndreasAugustin/actions-template-sync@v2
         with:
-          source_repo_path: sansan0/TrendRadar
-          
-          upstream_branch: master
-          
-          pr_labels: sync_template
-          
-          # 源和目标都使用你的 PAT
-          source_gh_token: ${{ secrets.my_pat }}
-          github_token: ${{ secrets.my_pat }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Add template remote (public)
+        run: |
+          # 如果模板仓库是私有的，请改为使用带 token 的 URL（见下方说明）
+          git remote add template https://github.com/sansan0/TrendRadar.git || true
+
+      - name: Fetch all remotes
+        run: git fetch --all --prune
+
+      - name: Determine base branch and template branch/sha
+        id: vars
+        run: |
+          # base branch (your repo default)
+          BASE_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD | sed 's|origin/||')
+          echo "BASE_BRANCH=$BASE_BRANCH" >> $GITHUB_ENV
+
+          # try to read template's HEAD -> branch; fallback to main
+          TEMPLATE_HEAD_REF=$(git for-each-ref --format='%(refname:short)' refs/remotes/template/HEAD 2>/dev/null || true)
+          if [ -n "$TEMPLATE_HEAD_REF" ]; then
+            TEMPLATE_BRANCH=${TEMPLATE_HEAD_REF#template/}
+          else
+            TEMPLATE_BRANCH=main
+          fi
+          echo "TEMPLATE_BRANCH=$TEMPLATE_BRANCH" >> $GITHUB_ENV
+
+          # template commit sha
+          TEMPLATE_SHA=$(git rev-parse --verify template/${TEMPLATE_BRANCH} 2>/dev/null || true)
+          echo "TEMPLATE_SHA=$TEMPLATE_SHA" >> $GITHUB_ENV
+
+          echo "Detected base: $BASE_BRANCH, template branch: $TEMPLATE_BRANCH, template sha: $TEMPLATE_SHA"
+
+      - name: Create sync branch from base
+        run: |
+          SYNC_BRANCH=template-sync/${TEMPLATE_BRANCH}-${{ github.run_id }}
+          git checkout -b "$SYNC_BRANCH" "origin/${BASE_BRANCH}"
+          echo "SYNC_BRANCH=$SYNC_BRANCH" >> $GITHUB_ENV
+
+      - name: Copy files from template (preserve this workflow)
+        run: |
+          # 把模板分支的文件写入当前分支工作区
+          git checkout "template/${TEMPLATE_BRANCH}" -- . || true
+
+          # 防止把同步 workflow 覆盖（保持本仓库中的该 workflow）
+          git restore --source="origin/${BASE_BRANCH}" -- .github/workflows/sync-template.yml || true
+
+      - name: Commit and push if there are changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git status --porcelain | grep . >/dev/null; then
+            git add -A
+            SHORT_SHA=${TEMPLATE_SHA:0:7}
+            git commit -m "chore(sync): bring files from template sansan0/TrendRadar@${SHORT_SHA}"
+            git push -u origin "$SYNC_BRANCH"
+            echo "branch=$SYNC_BRANCH" >> $GITHUB_OUTPUT
+            echo "pushed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes to sync"
+            echo "pushed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request for review
+        if: steps.commit.outputs.pushed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.commit.outputs.branch }}
+          base: ${{ env.BASE_BRANCH }}
+          title: "chore(sync): update from template sansan0/TrendRadar (${{ env.TEMPLATE_SHA }})"
+          body: |
+            This PR updates repository files from the template repository:
+            - Template: https://github.com/sansan0/TrendRadar
+            - Template branch: ${{ env.TEMPLATE_BRANCH }}
+            - Template commit: ${{ env.TEMPLATE_SHA }}
+
+            Please review and merge if acceptable.
+          labels: sync,template
+          delete-branch: true
