@@ -1,14 +1,20 @@
 name: Sync from Template
 
 on:
-  # 可以手动触发，也可以定时触发
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # 每周一自动检查
+    - cron: "0 0 * * *"
 
 jobs:
   repo-sync:
     runs-on: ubuntu-latest
+    
+    # ➕➕➕ 重点：必需添加这部分权限设置 ➕➕➕
+    permissions:
+      contents: write       # 允许写入代码 (git push)
+      pull-requests: write  # 允许创建 PR
+    # ➕➕➕ 结束 ➕➕➕
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -16,6 +22,8 @@ jobs:
       - name: actions-template-sync
         uses: AndreasAugustin/actions-template-sync@v2
         with:
-          source_repo_path: sansan0/TrendRadar # 例如: facebook/react
-          upstream_branch: master # 原仓库分支
-          pr_labels: sync_template # 自动创建 PR 的标签
+          source_repo_path: sansan0/TrendRadar
+          upstream_branch: main
+          pr_labels: sync_template
+          # 确保这里引用了 token
+          github_token: ${{ secrets.GITHUB_TOKEN }}
