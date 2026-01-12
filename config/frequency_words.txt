@@ -90,3 +90,160 @@
 
 # 家庭实验室与网络：NAS玩家关键词
 /Home Lab|Homelab|NAS|Synology|Unraid|TrueNAS|Raspberry Pi|Orange Pi|Mini PC|N100|WiFi 7|10GbE/i => 极客硬件
+
+# ==============================================================================
+# BLOCK 7: 科技媒体与行业趋势 (Tech Media & Industry Trends)
+# 核心：关注科技行业动态、产品发布、市场分析
+# ==============================================================================
+
+# 产品发布与评测：关注新品发布、评测报告
+/Product Launch|Review|Benchmark|Teardown|Unboxing|First Look|Hands-on|产品发布|评测|拆解/i => 产品评测
+
+# 行业分析与市场：关注市场趋势、投资、并购
+/Market Analysis|IPO|Acquisition|Merger|Funding|Investment|Valuation|市场分析|投资|并购|融资/i => 市场动态
+
+# 科技政策与监管：关注政策法规、反垄断、隐私保护
+/Tech Policy|Regulation|Antitrust|Privacy Law|GDPR|Data Protection|Compliance|科技政策|监管|反垄断/i => 科技政策
+
+# ==============================================================================
+# BLOCK 8: 新兴技术领域 (Emerging Technologies)
+# 核心：关注前沿技术、新兴应用场景
+# ==============================================================================
+
+# 量子计算与边缘计算：下一代计算范式
+/Quantum Computing|Quantum Supremacy|Edge Computing|Fog Computing|量子计算|边缘计算/i => 新兴计算
+
+# 区块链与Web3：去中心化技术栈
+/Blockchain|Web3|DeFi|NFT|Smart Contract|Ethereum|Bitcoin|Cryptocurrency|区块链|加密货币/i => 区块链Web3
+
+# 物联网与智能硬件：万物互联
+/IoT|Internet of Things|Smart Home|Wearable|Smart Watch|物联网|智能家居|可穿戴设备/i => 物联网
+
+# 自动驾驶与新能源：交通革命
+/Autonomous Driving|Self-driving|Electric Vehicle|EV|Tesla|BYD|自动驾驶|电动汽车|新能源车/i => 智能交通
+
+# ==============================================================================
+# BLOCK 9: 开源与社区 (Open Source & Community)
+# 核心：开源项目、开发者社区、协作工具
+# ==============================================================================
+
+# 开源项目与许可：关注开源生态
+/Open Source|MIT License|Apache License|GPL|GitHub|GitLab|开源|开源许可/i => 开源生态
+
+# 开发者社区与协作：关注开发者工具和社区
+/Developer Community|Stack Overflow|Reddit|Discord|Slack|开发者社区|技术社区/i => 开发者社区
+
+# 版本控制与协作：现代开发工作流
+/Git|Version Control|Pull Request|Code Review|CI\/CD|DevOps|版本控制|代码审查/i => 开发协作
+
+# ==============================================================================
+# BLOCK 10: 云计算与基础设施 (Cloud Computing & Infrastructure)
+# 核心：云服务、容器化、微服务架构
+# ==============================================================================
+
+# 云服务平台：三大云厂商及新兴云服务
+/AWS|Amazon Web Services|Microsoft Azure|Google Cloud|GCP|Cloudflare|DigitalOcean|阿里云|腾讯云|华为云/i => 云服务平台
+
+# 容器与编排：现代应用部署
+/Docker|Kubernetes|K8s|Container|Microservices|Service Mesh|Istio|容器|微服务/i => 容器编排
+
+# 基础设施即代码：自动化运维
+/Infrastructure as Code|IaC|Terraform|Ansible|Chef|Puppet|基础设施即代码/i => 基础设施自动化
+
+# ==============================================================================
+# BLOCK 11: 网络安全与隐私 (Cybersecurity & Privacy)
+# 核心：安全威胁、防护技术、合规要求
+# ==============================================================================
+
+# 网络安全威胁：攻击类型和防护
+/Cybersecurity|Malware|Ransomware|Phishing|Zero-day|Vulnerability|Penetration Testing|网络安全|恶意软件|勒索软件/i => 网络安全
+
+# 数据保护与隐私：合规和技术
+/Data Privacy|GDPR|CCPA|Encryption|Zero Trust|Multi-factor Authentication|数据隐私|加密|零信任/i => 数据保护
+
+# 安全工具与平台：安全技术栈
+/SIEM|SOC|Firewall|IDS|IPS|WAF|Security Operations|安全运营中心/i => 安全工具
+
+# ==============================================================================
+# BLOCK 12: 编程语言生态 (Programming Languages Ecosystem)
+# 核心：主流编程语言及其生态系统
+# ==============================================================================
+
+# 系统编程语言：性能导向
+/Rust|Go|Golang|C\+\+|Zig|系统编程|内存安全/i => 系统编程语言
+
+# Web开发语言：前后端技术栈
+/JavaScript|TypeScript|React|Vue|Angular|Node\.js|Deno|Bun|前端框架|后端框架/i => Web开发语言
+
+# 移动开发语言：跨平台解决方案
+/Swift|Kotlin|Dart|Flutter|React Native|移动开发|跨平台开发/i => 移动开发语言
+
+# ==============================================================================
+# BLOCK 13: 数据存储与管理 (Data Storage & Management)
+# 核心：数据库技术、存储解决方案
+# ==============================================================================
+
+# 关系型数据库：传统RDBMS
+/PostgreSQL|MySQL|Oracle|SQL Server|SQLite|关系型数据库|RDBMS/i => 关系型数据库
+
+# NoSQL数据库：非关系型存储
+/MongoDB|Redis|Cassandra|DynamoDB|Neo4j|Graph Database|NoSQL|非关系型数据库/i => NoSQL数据库
+
+# 搜索与分析：全文搜索和数据分析
+/Elasticsearch|Solr|Apache Lucene|Full-text Search|全文搜索|搜索引擎/i => 搜索分析
+
+# ==============================================================================
+# BLOCK 14: 学术研究与科学计算 (Academic Research & Scientific Computing)
+# 核心：学术论文、科学计算、研究工具
+# ==============================================================================
+
+# 学术出版与论文：科研发表
+/arXiv|Nature|Science|PLOS|Peer Review|Academic Publishing|学术论文|同行评议/i => 学术出版
+
+# 科学计算工具：数值计算和仿真
+/NumPy|SciPy|MATLAB|Mathematica|Julia|Scientific Computing|High Performance Computing|HPC|科学计算|高性能计算/i => 科学计算
+
+# 研究方法与统计：科研方法论
+/Statistical Analysis|Experimental Design|Reproducible Research|Open Science|统计分析|实验设计|可重现研究/i => 研究方法
+
+# ==============================================================================
+# BLOCK 15: 游戏开发与图形学 (Game Development & Computer Graphics)
+# 核心：游戏引擎、图形渲染、交互设计
+# ==============================================================================
+
+# 游戏引擎与开发：游戏制作工具
+/Unity|Unreal Engine|Godot|Game Engine|Game Development|Indie Game|游戏引擎|游戏开发|独立游戏/i => 游戏开发
+
+# 计算机图形学：渲染和视觉效果
+/Computer Graphics|Rendering|Ray Tracing|Vulkan|OpenGL|DirectX|Shader|计算机图形学|渲染|光线追踪/i => 计算机图形学
+
+# VR/AR技术：沉浸式体验
+/Virtual Reality|VR|Augmented Reality|AR|Mixed Reality|MR|Metaverse|虚拟现实|增强现实|元宇宙/i => VRAR技术
+
+# ==============================================================================
+# BLOCK 16: 设计与用户体验 (Design & User Experience)
+# 核心：UI/UX设计、设计工具、用户研究
+# ==============================================================================
+
+# UI/UX设计：用户界面和体验设计
+/UI Design|UX Design|User Interface|User Experience|Usability|Accessibility|用户界面|用户体验|可用性|无障碍设计/i => UIUX设计
+
+# 设计工具与流程：设计工作流
+/Figma|Sketch|Adobe XD|Photoshop|Illustrator|Design System|Prototyping|设计系统|原型设计/i => 设计工具
+
+# 用户研究：以用户为中心的设计
+/User Research|A\/B Testing|User Testing|Persona|Journey Map|用户研究|AB测试|用户画像/i => 用户研究
+
+# ==============================================================================
+# BLOCK 17: 物联网与嵌入式 (IoT & Embedded Systems)
+# 核心：物联网设备、嵌入式开发、边缘计算
+# ==============================================================================
+
+# 嵌入式开发：硬件编程
+/Embedded Systems|Microcontroller|Arduino|Raspberry Pi|ESP32|RTOS|嵌入式系统|单片机|实时操作系统/i => 嵌入式开发
+
+# 物联网协议：设备通信
+/MQTT|CoAP|LoRaWAN|Zigbee|Bluetooth|WiFi|5G|物联网协议|设备通信/i => 物联网协议
+
+# 边缘智能：本地计算和AI
+/Edge AI|Edge Computing|TinyML|Federated Learning|边缘AI|边缘计算|联邦学习/i => 边缘智能
