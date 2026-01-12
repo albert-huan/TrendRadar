@@ -23,7 +23,7 @@ jobs:
         uses: AndreasAugustin/actions-template-sync@v2
         with:
           source_repo_path: sansan0/TrendRadar
-          upstream_branch: main
+          upstream_branch: master
           pr_labels: sync_template
           
          # 【读取源仓库】
