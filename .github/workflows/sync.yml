@@ -1,80 +1,81 @@
+# Sync from template sansan0/TrendRadar using a PAT to avoid permission errors
 name: Sync from template sansan0/TrendRadar
 
 on:
   workflow_dispatch:
   schedule:
-    # 每周一次（周日 00:00 UTC），可按需修改或删除
     - cron: '0 0 * * *'
 
 permissions:
   contents: write
   pull-requests: write
 
+env:
+  TEMPLATE_REPO: "https://github.com/sansan0/TrendRadar.git"
+  # 如果模板默认分支不是 main，可以在 workflow_dispatch 时覆盖或修改这里
+  TEMPLATE_BRANCH: "main"
+
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository (full history)
+      - name: Checkout repository (full history) using MY_PAT
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.MY_PAT }}
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Add template remote (public)
+      - name: Add template remote (use MY_PAT so private templates work)
         run: |
-          # 如果模板仓库是私有的，请改为使用带 token 的 URL（见下方说明）
-          git remote add template https://github.com/sansan0/TrendRadar.git || true
-
-      - name: Fetch all remotes
-        run: git fetch --all --prune
+          # 使用 x-access-token 形式保证对私有模板的访问（若模板是 public，也可以直接用 URL）
+          git remote add template "https://x-access-token:${{ secrets.MY_PAT }}@github.com/sansan0/TrendRadar.git" || true
+          git fetch template --prune
 
       - name: Determine base branch and template branch/sha
         id: vars
         run: |
           # base branch (your repo default)
-          BASE_BRANCH=$(git rev-parse --abbrev-ref origin/HEAD | sed 's|origin/||')
+          BASE_BRANCH=$(git remote show origin | sed -n 's/.*HEAD branch: //p' || true)
+          if [ -z "$BASE_BRANCH" ]; then
+            BASE_BRANCH="main"
+          fi
           echo "BASE_BRANCH=$BASE_BRANCH" >> $GITHUB_ENV
 
-          # try to read template's HEAD -> branch; fallback to main
-          TEMPLATE_HEAD_REF=$(git for-each-ref --format='%(refname:short)' refs/remotes/template/HEAD 2>/dev/null || true)
-          if [ -n "$TEMPLATE_HEAD_REF" ]; then
-            TEMPLATE_BRANCH=${TEMPLATE_HEAD_REF#template/}
-          else
-            TEMPLATE_BRANCH=main
-          fi
+          TEMPLATE_BRANCH="${{ env.TEMPLATE_BRANCH }}"
           echo "TEMPLATE_BRANCH=$TEMPLATE_BRANCH" >> $GITHUB_ENV
 
-          # template commit sha
-          TEMPLATE_SHA=$(git rev-parse --verify template/${TEMPLATE_BRANCH} 2>/dev/null || true)
+          TEMPLATE_SHA=$(git rev-parse --verify "template/${TEMPLATE_BRANCH}" 2>/dev/null || true)
           echo "TEMPLATE_SHA=$TEMPLATE_SHA" >> $GITHUB_ENV
 
           echo "Detected base: $BASE_BRANCH, template branch: $TEMPLATE_BRANCH, template sha: $TEMPLATE_SHA"
 
       - name: Create sync branch from base
         run: |
-          SYNC_BRANCH=template-sync/${TEMPLATE_BRANCH}-${{ github.run_id }}
+          SYNC_BRANCH="template-sync/${TEMPLATE_BRANCH}-${{ github.run_id }}"
+          git fetch origin "$BASE_BRANCH"
           git checkout -b "$SYNC_BRANCH" "origin/${BASE_BRANCH}"
           echo "SYNC_BRANCH=$SYNC_BRANCH" >> $GITHUB_ENV
 
       - name: Copy files from template (preserve this workflow)
         run: |
-          # 把模板分支的文件写入当前分支工作区
+          # 将模板的文件检出到当前工作树（会覆盖当前分支文件）
           git checkout "template/${TEMPLATE_BRANCH}" -- . || true
 
-          # 防止把同步 workflow 覆盖（保持本仓库中的该 workflow）
+          # 恢复本仓库的该 workflow 文件，避免被模板覆盖导致循环
           git restore --source="origin/${BASE_BRANCH}" -- .github/workflows/sync-template.yml || true
 
-      - name: Commit and push if there are changes
+      - name: Commit and push if there are changes (use MY_PAT auth)
         id: commit
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "Sync Bot"
+          git config user.email "sync-bot@example.com"
 
           if git status --porcelain | grep . >/dev/null; then
             git add -A
             SHORT_SHA=${TEMPLATE_SHA:0:7}
             git commit -m "chore(sync): bring files from template sansan0/TrendRadar@${SHORT_SHA}"
-            git push -u origin "$SYNC_BRANCH"
+            git push -u "https://x-access-token:${{ secrets.MY_PAT }}@github.com/${{ github.repository }}.git" "$SYNC_BRANCH"
             echo "branch=$SYNC_BRANCH" >> $GITHUB_OUTPUT
             echo "pushed=true" >> $GITHUB_OUTPUT
           else
@@ -86,7 +87,8 @@ jobs:
         if: steps.commit.outputs.pushed == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          # 使用 source_gh_token 以消除弃用警告并确保 action 使用同一 PAT
+          source_gh_token: ${{ secrets.MY_PAT }}
           branch: ${{ steps.commit.outputs.branch }}
           base: ${{ env.BASE_BRANCH }}
           title: "chore(sync): update from template sansan0/TrendRadar (${{ env.TEMPLATE_SHA }})"
