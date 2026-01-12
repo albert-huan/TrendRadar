@@ -27,4 +27,4 @@ jobs:
           upstream_branch: main
           pr_labels: sync_template
           # 确保这里引用了 token
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.my_pat }}
