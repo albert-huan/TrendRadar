@@ -1,249 +1,251 @@
-# ==============================================================================
-# BLOCK 1: 临床数据科学与医药研发 (Clinical Domain & Regs)
-# 核心：不仅关注药，更关注数据标准、统计方法和合规性
-# ==============================================================================
+# ═══════════════════════════════════════════════════════════════
+#                    TrendRadar 频率词配置文件
+# ═══════════════════════════════════════════════════════════════
+#
+# 这个文件用来设置你想关注的新闻关键词。
+# 系统会自动抓取包含这些关键词的热榜新闻推送给你。
+#
+# 文件分为两个区域：
+#   [GLOBAL_FILTER]  - 全局过滤区：排除不想看的内容
+#   [WORD_GROUPS]    - 词组定义区：设置想关注的关键词
+#
+# ═══════════════════════════════════════════════════════════════
+
+
+# ───────────────────────────────────────────────────────────────
+#                        全局过滤区
+# ───────────────────────────────────────────────────────────────
+# 在这里写入你不想看到的词，每行一个。
+# 包含这些词的新闻会被自动排除，不会出现在推送中。
+#
+# 使用方法：
+#   震惊              直接写词，包含"震惊"的新闻会被过滤
+#   /赌博|博彩/       用 /.../ 包裹可以匹配多个词（用 | 分隔）
+
+[GLOBAL_FILTER]
+# 过滤标题党
+震惊
+
+
+
+# ───────────────────────────────────────────────────────────────
+#                        词组定义区
+# ───────────────────────────────────────────────────────────────
+# 在这里写入你想关注的关键词。
+# 每个词组用空行分隔，同一词组内的关键词是"或"的关系。
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      语法总览（快速参考）                      │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 关键词语法：
+#   关键词            普通关键词，标题包含即匹配
+#   /正则/            正则表达式匹配（自动忽略大小写）
+#   关键词 => 别名    给关键词指定显示别名
+#   [组别名]          词组第一行，给整组指定别名
+#   +关键词           必须词，所有必须词都要匹配才算匹配
+#   !关键词           过滤词，匹配则排除该条新闻（仅限当前词组）
+#   @数字             限制该词组最多显示多少条
+#
+# 显示名称优先级：
+#   1. 有组别名 → 显示组别名
+#   2. 没有组别名 → 显示各行别名拼接（用 " / " 连接）
+#   3. 没有别名 → 显示关键词本身
+#
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      基础用法（推荐新手）                      │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 1. 最简单：直接写关键词
+#    ────────────────────
+#    华为
+#
+#    效果：匹配所有包含"华为"的新闻
+#
+#
+# 2. 多个关键词归为一组
+#    ────────────────────
+#    华为
+#    鸿蒙
+#    任正非
+#
+#    效果：匹配包含"华为"或"鸿蒙"或"任正非"的新闻，统一显示为"华为 / 鸿蒙 / 任正非"
+#
+#
+# 3. 给词组起个名字（推荐）
+#    ────────────────────
+#    [华为]
+#    华为
+#    鸿蒙
+#    任正非
+#
+#    效果：同上，但显示名称为"华为"（更简洁）
+#
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      进阶用法（可选）                         │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 4. 用正则表达式匹配多个词（一行搞定）
+#    ────────────────────
+#    /华为|鸿蒙|任正非/ => 华为
+#
+#    效果：匹配包含"华为"或"鸿蒙"或"任正非"的新闻，显示为"华为"
+#    说明：/.../ 里用 | 分隔多个词，=> 后面是显示名称
+#
+#    💡 不懂正则？问 AI：
+#       "帮我写一个正则表达式，匹配包含'华为'或'鸿蒙'或'任正非'的文本，
+#        格式要求：/正则/ => 显示名称"
+#
+#
+# 5. 精确匹配英文单词（避免误匹配）
+#    ────────────────────
+#    /\bAI\b/i => AI
+#
+#    说明：\b 表示单词边界，避免匹配到 "MAIL" 中的 "AI"
+#          /i 表示忽略大小写，"ai"、"AI"、"Ai" 都能匹配
+#
+#    💡 不懂正则？问 AI：
+#       "帮我写一个正则表达式，精确匹配英文单词'AI'（不匹配 MAIL 中的 AI），
+#        忽略大小写，格式要求：/正则/i => 显示名称"
+#
+#
+# 6. 排除特定内容
+#    ────────────────────
+#    [苹果公司]
+#    苹果
+#    !水果
+#    !果园
+#
+#    效果：匹配"苹果"但排除包含"水果"或"果园"的新闻
+#    说明：! 开头的词表示"排除"
+#
+#
+# 7. 限制显示条数
+#    ────────────────────
+#    [科技新闻]
+#    科技
+#    @5
+#
+#    效果：最多显示 5 条匹配的新闻
+#    说明：@数字 表示限制条数
+#
+#
+# 8. 必须同时包含多个词
+#    ────────────────────
+#    +苹果
+#    +发布会
+#
+#    效果：必须同时包含"苹果"和"发布会"才匹配
+#    说明：+ 开头的词表示"必须包含"
+#
+# ───────────────────────────────────────────────────────────────
 
-# 监管与合规：覆盖中、美、欧及国际协调组织，加入隐私法规(GDPR/HIPAA)
-/CDE|NMPA|药审中心|FDA|EMA|ICH|PMDA|GCP|21 CFR Part 11|HIPAA|GDPR|Helsinki/i => 监管法规
+[WORD_GROUPS]
 
-# 数据标准：除了 CDISC，加入真实世界数据标准 OMOP 和互操作性标准 FHIR
-/CDISC|SDTM|ADaM|SEND|Define\.xml|ODM|OMOP|OHDSI|FHIR|HL7|DICOM/i => 数据标准
+# ═══════════════════════════════════════════════════════════════
+#                         企业与品牌
+# ═══════════════════════════════════════════════════════════════
 
-# 研发与试验设计：涵盖创新疗法(ADC/CGT)和新型试验设计(适应性设计)
-/Clinical Trial|RCT|Adaptive Design|Basket Trial|Umbrella Trial|ADC|CGT|Gene Therapy|Immunotherapy|Biomarker|伴随诊断/i => 研发设计
+/胖东来|于东来/ => 胖东来
 
-# 统计学方法：关注贝叶斯、生存分析及因果推断（真实世界研究核心）
-/Biostatistics|Survival Analysis|Kaplan-Meier|Cox Model|Bayesian|Causal Inference|Propensity Score|Meta-analysis|Subgroup Analysis/i => 生物统计
+/DeepSeek|梁文锋/i => DeepSeek
 
-# 临床系统：EDC, CTMS, ePRO 等基础设施
-/EDC|Rave|Medidata|RedCap|CTMS|ePRO|eCOA|\bPV\b|Pharmacovigilance/i => 临床系统
+/华为|鸿蒙|HarmonyOS|任正非/i => 华为
 
-# ==============================================================================
-# BLOCK 2: 数据技术栈 (Data Tech Stack)
-# 核心：R与Python的双修，以及正在崛起的高性能工具(DuckDB/Polars)
-# ==============================================================================
+/比亚迪|王传福|byd/i => 比亚迪
 
-# R生态进阶：包含环境管理(renv)、管道操作(targets)及可视化
-/\bR\b|\bR Language\b|RStudio|Posit|Positron|Tidyverse|Dplyr|Ggplot2|Shiny|Quarto|Renv|Targets|Bioconductor/i => R语言生态
+/大疆|\bDJI\b/i => 大疆
 
-# Python数据栈：加入高性能库 Polars 和现代构建工具
-/\bPython\b|Pandas|Polars|NumPy|SciPy|Scikit-learn|PyTorch|TensorFlow|Jupyter|Poetry|Conda|Ruff/i => Python数据栈
+/宇树|王兴兴|Unitree/ => 宇树机器人
 
-# 数据库与数仓：关注本地分析神器 DuckDB 和现代数据栈
-/SQL|PostgreSQL|DuckDB|SQLite|Snowflake|Databricks|Data Lake|Parquet|Arrow/i => 数据存储
+/智元|灵犀|稚晖君|彭志辉|AgiBot/ => 智元机器人
+/众擎|EngineAI|赵同阳/ => 众擎机器人
 
-# ==============================================================================
-# BLOCK 3: AI 人工智能 (AI, LLM & Engineering)
-# 核心：区分“模型本身”、“开发框架”和“本地部署技术”
-# ==============================================================================
+/黑神话|冯骥/ => 黑神话悟空
 
-# 前沿大模型：覆盖闭源(GPT/Claude)与开源(Llama/DeepSeek/Mistral)
-/LLM|Transformer|GPT-4|GPT-5|Claude|Gemini|Llama|Mistral|DeepSeek|Qwen|Grok|Mixture of Experts|MoE/i => 大模型
+/影之刃零|梁其伟/ => 影之刃零
 
-# AI工程化：RAG、Agent、提示词工程
-/RAG|Retrieval Augmented|LangChain|LlamaIndex|Vector DB|Pinecone|Chroma|Embedding|Prompt Engineering|Fine-tuning|LoRA|RLHF/i => AI工程化
+/三体|流浪地球|刘慈欣|郭帆/ => 三体/流浪地球
 
-# AI Agent与自动化：自主智能体框架
-/Agent|Agentic|AutoGPT|CrewAI|LangGraph|Multi-agent|Copilot/i => AI智能体
+申奥
 
-# 本地AI与量化：作为硬件党，这是你如何把大模型跑在自己显卡上的关键
-/Ollama|LM Studio|vLLM|GGUF|AWQ|GPTQ|Quantization|Local LLM|Whisper|Stable Diffusion|Flux|Midjourney/i => 本地AI生成
+/京东|刘强东/ => 京东
 
-# ==============================================================================
-# BLOCK 4: 独立开发与全栈 (Indie Dev & Fullstack)
-# 核心：快速构建产品的工具链，从前端到变现
-# ==============================================================================
+/字节|bytedance|张一鸣/i => 字节跳动
 
-# 现代前端与UI：Shadcn是目前最火的组件库，Tailwind是标配
-/React|Next\.js|Vue|Nuxt|Svelte|SolidJS|Tailwind|Shadcn|Framer Motion|Three\.js/i => 前端技术
+/qwen|minimax|glm/ => 国产开源模型
 
-# 后端与BaaS：独立开发者偏爱的“后端即服务”
-/Node\.js|TypeScript|Bun|Deno|Supabase|Firebase|Appwrite|PocketBase|Prisma|TRPC/i => 后端服务
+/特斯拉|马斯克/ => 特斯拉
 
-# 移动端开发：跨平台技术
-/Flutter|React Native|SwiftUI|Expo|Kotlin/i => 移动开发
+/英伟达|\bNVIDIA\b|黄仁勋/i => 英伟达
+/\bAMD\b/i => AMD
 
-# 商业化与增长：独立开发的终极目标（MRR/SaaS）
-/SaaS|MicroSaaS|Indie Hacker|Build in Public|Stripe|Lemon Squeezy|Paddle|SEO|Product Hunt|MRR|ARR/i => 商业化
+/微软|\bMicrosoft\b/i => 微软
+/谷歌|\bgoogle\b|\bgemini\b|\bdeepMind\b/i => 谷歌
+/\biphone\b|\bipad\b|\bmac\b|\bios\b/i => 苹果
 
-# ==============================================================================
-# BLOCK 5: 开发者工具 (Dev Environment)
-# 核心：编辑器战国时代（VS Code vs Cursor vs Zed）
-# ==============================================================================
+/\bchatgpt\b|\bopenai\b|\bsora\b/i => OpenAI
+/\bclaude\b|anthropic/i => Claude
 
-# 现代IDE：Cursor(AI原生), Zed(高性能), Neovim(极客)
-/VS Code|VSCode|Cursor|Windsurf|Zed Editor|Neovim|IntelliJ|Fleet|Kiro|Trae|Google Antigravity/i => 开发工具
 
-# 容器与运维：Docker是基础
-/Docker|Kubernetes|K8s|Podman|CI\/CD|GitHub Actions|Vercel|Netlify|Cloudflare/i => 运维部署
+# ═══════════════════════════════════════════════════════════════
+#                         国家与地区
+# ═══════════════════════════════════════════════════════════════
 
-# ==============================================================================
-# BLOCK 6: 计算机硬件与极客装备 (Hardware & Home Lab)
-# 核心：生产力工具(GPU) + 玩具(树莓派/NAS) + 芯片架构
-# ==============================================================================
+[中国]
+国产
+中国
 
-# 显卡与算力：关注N卡生态和国产算力
-/NVIDIA|GPU|CUDA|RTX 4090|RTX 5090|H100|H800|Blackwell|AMD ROCm|Ascend|昇腾/i => 显卡算力
+[东亚]
+日本
+朝鲜
+韩国
 
-# 芯片架构：Apple Silicon 和 RISC-V 是热点
-/Apple Silicon|M3 Max|M4 Chip|Mac Studio|Snapdragon X|ARM|RISC-V|Intel Core|Ryzen/i => 芯片架构
+[北美]
+美国
+加拿大
 
-# 家庭实验室与网络：NAS玩家关键词
-/Home Lab|Homelab|NAS|Synology|Unraid|TrueNAS|Raspberry Pi|Orange Pi|Mini PC|N100|WiFi 7|10GbE/i => 极客硬件
+[西欧]
+法国
+英国
 
-# ==============================================================================
-# BLOCK 7: 科技媒体与行业趋势 (Tech Media & Industry Trends)
-# 核心：关注科技行业动态、产品发布、市场分析
-# ==============================================================================
+/俄罗斯|俄国/ => 俄罗斯
 
-# 产品发布与评测：关注新品发布、评测报告
-/Product Launch|Review|Benchmark|Teardown|Unboxing|First Look|Hands-on|产品发布|评测|拆解/i => 产品评测
+印度
 
-# 行业分析与市场：关注市场趋势、投资、并购
-/Market Analysis|IPO|Acquisition|Merger|Funding|Investment|Valuation|市场分析|投资|并购|融资/i => 市场动态
 
-# 科技政策与监管：关注政策法规、反垄断、隐私保护
-/Tech Policy|Regulation|Antitrust|Privacy Law|GDPR|Data Protection|Compliance|科技政策|监管|反垄断/i => 科技政策
+# ═══════════════════════════════════════════════════════════════
+#                         科技领域
+# ═══════════════════════════════════════════════════════════════
 
-# ==============================================================================
-# BLOCK 8: 新兴技术领域 (Emerging Technologies)
-# 核心：关注前沿技术、新兴应用场景
-# ==============================================================================
+[AI 相关]
+/(?<![a-zA-Z])ai(?![a-zA-Z])/i
+人工智能
 
-# 量子计算与边缘计算：下一代计算范式
-/Quantum Computing|Quantum Supremacy|Edge Computing|Fog Computing|量子计算|边缘计算/i => 新兴计算
+[芯片]
+芯片
+光刻机
+半导体
 
-# 区块链与Web3：去中心化技术栈
-/Blockchain|Web3|DeFi|NFT|Smart Contract|Ethereum|Bitcoin|Cryptocurrency|区块链|加密货币/i => 区块链Web3
+/水电|雅鲁藏布江/ => 水电
+/光伏|太阳能/ => 光伏
+核能
+能源
 
-# 物联网与智能硬件：万物互联
-/IoT|Internet of Things|Smart Home|Wearable|Smart Watch|物联网|智能家居|可穿戴设备/i => 物联网
+/自动驾驶|无人驾驶|智驾/ => 自动驾驶
 
-# 自动驾驶与新能源：交通革命
-/Autonomous Driving|Self-driving|Electric Vehicle|EV|Tesla|BYD|自动驾驶|电动汽车|新能源车/i => 智能交通
+机器人
+/机械狗|四足/ => 机器狗
+具身智能
 
-# ==============================================================================
-# BLOCK 9: 开源与社区 (Open Source & Community)
-# 核心：开源项目、开发者社区、协作工具
-# ==============================================================================
+/月球|登月|火星|宇宙|飞船|航天|空间站|卫星/ => 航天
 
-# 开源项目与许可：关注开源生态
-/Open Source|MIT License|Apache License|GPL|GitHub|GitLab|开源|开源许可/i => 开源生态
+# 前沿科技
+量子
+脑机
+基因
 
-# 开发者社区与协作：关注开发者工具和社区
-/Developer Community|Stack Overflow|Reddit|Discord|Slack|开发者社区|技术社区/i => 开发者社区
-
-# 版本控制与协作：现代开发工作流
-/Git|Version Control|Pull Request|Code Review|CI\/CD|DevOps|版本控制|代码审查/i => 开发协作
-
-# ==============================================================================
-# BLOCK 10: 云计算与基础设施 (Cloud Computing & Infrastructure)
-# 核心：云服务、容器化、微服务架构
-# ==============================================================================
-
-# 云服务平台：三大云厂商及新兴云服务
-/AWS|Amazon Web Services|Microsoft Azure|Google Cloud|GCP|Cloudflare|DigitalOcean|阿里云|腾讯云|华为云/i => 云服务平台
-
-# 容器与编排：现代应用部署
-/Docker|Kubernetes|K8s|Container|Microservices|Service Mesh|Istio|容器|微服务/i => 容器编排
-
-# 基础设施即代码：自动化运维
-/Infrastructure as Code|IaC|Terraform|Ansible|Chef|Puppet|基础设施即代码/i => 基础设施自动化
-
-# ==============================================================================
-# BLOCK 11: 网络安全与隐私 (Cybersecurity & Privacy)
-# 核心：安全威胁、防护技术、合规要求
-# ==============================================================================
-
-# 网络安全威胁：攻击类型和防护
-/Cybersecurity|Malware|Ransomware|Phishing|Zero-day|Vulnerability|Penetration Testing|网络安全|恶意软件|勒索软件/i => 网络安全
-
-# 数据保护与隐私：合规和技术
-/Data Privacy|GDPR|CCPA|Encryption|Zero Trust|Multi-factor Authentication|数据隐私|加密|零信任/i => 数据保护
-
-# 安全工具与平台：安全技术栈
-/SIEM|SOC|Firewall|IDS|IPS|WAF|Security Operations|安全运营中心/i => 安全工具
-
-# ==============================================================================
-# BLOCK 12: 编程语言生态 (Programming Languages Ecosystem)
-# 核心：主流编程语言及其生态系统
-# ==============================================================================
-
-# 系统编程语言：性能导向
-/Rust|Go|Golang|C\+\+|Zig|系统编程|内存安全/i => 系统编程语言
-
-# Web开发语言：前后端技术栈
-/JavaScript|TypeScript|React|Vue|Angular|Node\.js|Deno|Bun|前端框架|后端框架/i => Web开发语言
-
-# 移动开发语言：跨平台解决方案
-/Swift|Kotlin|Dart|Flutter|React Native|移动开发|跨平台开发/i => 移动开发语言
-
-# ==============================================================================
-# BLOCK 13: 数据存储与管理 (Data Storage & Management)
-# 核心：数据库技术、存储解决方案
-# ==============================================================================
-
-# 关系型数据库：传统RDBMS
-/PostgreSQL|MySQL|Oracle|SQL Server|SQLite|关系型数据库|RDBMS/i => 关系型数据库
-
-# NoSQL数据库：非关系型存储
-/MongoDB|Redis|Cassandra|DynamoDB|Neo4j|Graph Database|NoSQL|非关系型数据库/i => NoSQL数据库
-
-# 搜索与分析：全文搜索和数据分析
-/Elasticsearch|Solr|Apache Lucene|Full-text Search|全文搜索|搜索引擎/i => 搜索分析
-
-# ==============================================================================
-# BLOCK 14: 学术研究与科学计算 (Academic Research & Scientific Computing)
-# 核心：学术论文、科学计算、研究工具
-# ==============================================================================
-
-# 学术出版与论文：科研发表
-/arXiv|Nature|Science|PLOS|Peer Review|Academic Publishing|学术论文|同行评议/i => 学术出版
-
-# 科学计算工具：数值计算和仿真
-/NumPy|SciPy|MATLAB|Mathematica|Julia|Scientific Computing|High Performance Computing|HPC|科学计算|高性能计算/i => 科学计算
-
-# 研究方法与统计：科研方法论
-/Statistical Analysis|Experimental Design|Reproducible Research|Open Science|统计分析|实验设计|可重现研究/i => 研究方法
-
-# ==============================================================================
-# BLOCK 15: 游戏开发与图形学 (Game Development & Computer Graphics)
-# 核心：游戏引擎、图形渲染、交互设计
-# ==============================================================================
-
-# 游戏引擎与开发：游戏制作工具
-/Unity|Unreal Engine|Godot|Game Engine|Game Development|Indie Game|游戏引擎|游戏开发|独立游戏/i => 游戏开发
-
-# 计算机图形学：渲染和视觉效果
-/Computer Graphics|Rendering|Ray Tracing|Vulkan|OpenGL|DirectX|Shader|计算机图形学|渲染|光线追踪/i => 计算机图形学
-
-# VR/AR技术：沉浸式体验
-/Virtual Reality|VR|Augmented Reality|AR|Mixed Reality|MR|Metaverse|虚拟现实|增强现实|元宇宙/i => VRAR技术
-
-# ==============================================================================
-# BLOCK 16: 设计与用户体验 (Design & User Experience)
-# 核心：UI/UX设计、设计工具、用户研究
-# ==============================================================================
-
-# UI/UX设计：用户界面和体验设计
-/UI Design|UX Design|User Interface|User Experience|Usability|Accessibility|用户界面|用户体验|可用性|无障碍设计/i => UIUX设计
-
-# 设计工具与流程：设计工作流
-/Figma|Sketch|Adobe XD|Photoshop|Illustrator|Design System|Prototyping|设计系统|原型设计/i => 设计工具
-
-# 用户研究：以用户为中心的设计
-/User Research|A\/B Testing|User Testing|Persona|Journey Map|用户研究|AB测试|用户画像/i => 用户研究
-
-# ==============================================================================
-# BLOCK 17: 物联网与嵌入式 (IoT & Embedded Systems)
-# 核心：物联网设备、嵌入式开发、边缘计算
-# ==============================================================================
-
-# 嵌入式开发：硬件编程
-/Embedded Systems|Microcontroller|Arduino|Raspberry Pi|ESP32|RTOS|嵌入式系统|单片机|实时操作系统/i => 嵌入式开发
-
-# 物联网协议：设备通信
-/MQTT|CoAP|LoRaWAN|Zigbee|Bluetooth|WiFi|5G|物联网协议|设备通信/i => 物联网协议
-
-# 边缘智能：本地计算和AI
-/Edge AI|Edge Computing|TinyML|Federated Learning|边缘AI|边缘计算|联邦学习/i => 边缘智能
+# 产业政策
+生产力
