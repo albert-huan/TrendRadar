@@ -26,15 +26,19 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Add template remote (use MY_PAT so private templates work)
+      - name: Add template remote (use MY_PAT so private templates work) and fetch branch
         run: |
-          # 使用 x-access-token 形式保证对私有模板的访问（若模板是 public，也可以直接用 URL）
+          set -e
           git remote add template "https://x-access-token:${{ secrets.MY_PAT }}@github.com/sansan0/TrendRadar.git" || true
-          git fetch template --prune
+          # explicitly fetch the template branch (shallow)
+          git fetch --no-tags --depth=1 template "${{ env.TEMPLATE_BRANCH }}" || true
+          # ensure remote refs are available for ls-remote if needed
+          echo "Fetched template/${{ env.TEMPLATE_BRANCH }}"
 
       - name: Determine base branch and template branch/sha
         id: vars
         run: |
+          set -e
           # base branch (your repo default)
           BASE_BRANCH=$(git remote show origin | sed -n 's/.*HEAD branch: //p' || true)
           if [ -z "$BASE_BRANCH" ]; then
@@ -45,13 +49,25 @@ jobs:
           TEMPLATE_BRANCH="${{ env.TEMPLATE_BRANCH }}"
           echo "TEMPLATE_BRANCH=$TEMPLATE_BRANCH" >> $GITHUB_ENV
 
-          TEMPLATE_SHA=$(git rev-parse --verify "template/${TEMPLATE_BRANCH}" 2>/dev/null || true)
+          # Try to get the template SHA reliably (try ls-remote first, then rev-parse)
+          TEMPLATE_SHA=$(git ls-remote template refs/heads/"${TEMPLATE_BRANCH}" | cut -f1)
+          if [ -z "$TEMPLATE_SHA" ]; then
+            # fall back to rev-parse if we fetched the branch
+            TEMPLATE_SHA=$(git rev-parse --verify "template/${TEMPLATE_BRANCH}" 2>/dev/null || true)
+          fi
           echo "TEMPLATE_SHA=$TEMPLATE_SHA" >> $GITHUB_ENV
 
           echo "Detected base: $BASE_BRANCH, template branch: $TEMPLATE_BRANCH, template sha: $TEMPLATE_SHA"
 
+          # fail early if we couldn't find the template branch/sha
+          if [ -z "$TEMPLATE_SHA" ]; then
+            echo "ERROR: template branch '${TEMPLATE_BRANCH}' not found in remote 'template'. Aborting." >&2
+            exit 1
+          fi
+
       - name: Create sync branch from base
         run: |
+          set -e
           SYNC_BRANCH="template-sync/${TEMPLATE_BRANCH}-${{ github.run_id }}"
           git fetch origin "$BASE_BRANCH"
           git checkout -b "$SYNC_BRANCH" "origin/${BASE_BRANCH}"
@@ -59,15 +75,17 @@ jobs:
 
       - name: Copy files from template (preserve this workflow)
         run: |
-          # 将模板的文件检出到当前工作树（会覆盖当前分支文件）
-          git checkout "template/${TEMPLATE_BRANCH}" -- . || true
-
-          # 恢复本仓库的该 workflow 文件，避免被模板覆盖导致循环
-          git restore --source="origin/${BASE_BRANCH}" -- .github/workflows/sync-template.yml || true
+          set -e
+          # Check out all files from the template branch
+          git checkout "template/${TEMPLATE_BRANCH}" -- .
+          # Restore this workflow file from the base branch to avoid being overwritten by the template
+          # IMPORTANT: restore the actual workflow filename (sync.yml)
+          git restore --source="origin/${BASE_BRANCH}" -- .github/workflows/sync.yml
 
       - name: Commit and push if there are changes (use MY_PAT auth)
         id: commit
         run: |
+          set -e
           git config user.name "Sync Bot"
           git config user.email "sync-bot@example.com"
 
@@ -87,7 +105,6 @@ jobs:
         if: steps.commit.outputs.pushed == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
-          # 使用 source_gh_token 以消除弃用警告并确保 action 使用同一 PAT
           source_gh_token: ${{ secrets.MY_PAT }}
           branch: ${{ steps.commit.outputs.branch }}
           base: ${{ env.BASE_BRANCH }}
