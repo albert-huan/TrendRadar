@@ -9,11 +9,12 @@ jobs:
   repo-sync:
     runs-on: ubuntu-latest
     
-    # ➕➕➕ 重点：必需添加这部分权限设置 ➕➕➕
+    # 这里的 permissions 其实可以删掉，因为下面的 PAT 权限更高，
+    # 但保留着也没坏处，作为双重保险。
     permissions:
-      contents: write       # 允许写入代码 (git push)
-      pull-requests: write  # 允许创建 PR
-    # ➕➕➕ 结束 ➕➕➕
+      contents: write
+      pull-requests: write
+      workflows: write 
 
     steps:
       - name: Checkout
@@ -23,13 +24,11 @@ jobs:
         uses: AndreasAugustin/actions-template-sync@v2
         with:
           source_repo_path: sansan0/TrendRadar
+          
           upstream_branch: master
+          
           pr_labels: sync_template
           
-         # 【读取源仓库】
-          # 这里填你自己的 PAT 即可！因为源仓库是公开的，你的账号就有权读取。
+          # 源和目标都使用你的 PAT
           source_gh_token: ${{ secrets.my_pat }}
-          
-          # 【写入你的仓库】
-          # 同样填你自己的 PAT，用来创建 PR 和修改 workflow 文件。
           github_token: ${{ secrets.my_pat }}
