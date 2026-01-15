@@ -1,192 +1,251 @@
-# ==============================================================================
-# BLOCK 1: 临床数据科学与医药研发 (Clinical Domain & Regs)
-# 核心：不仅关注药，更关注数据标准、统计方法和合规性
-# ==============================================================================
-
-# 监管与合规：覆盖中、美、欧及国际协调组织，加入隐私法规(GDPR/HIPAA)
-/CDE|NMPA|药审中心|FDA|EMA|ICH|PMDA|GCP|21 CFR Part 11|HIPAA|GDPR|Helsinki/i => 监管法规
-
-# 数据标准：除了 CDISC，加入真实世界数据标准 OMOP 和互操作性标准 FHIR
-/CDISC|SDTM|ADaM|SEND|Define\.xml|ODM|OMOP|OHDSI|FHIR|HL7|DICOM/i => 数据标准
-
-# 研发与试验设计：涵盖创新疗法(ADC/CGT)和新型试验设计(适应性设计)
-/Clinical Trial|RCT|Adaptive Design|Basket Trial|Umbrella Trial|ADC|CGT|Gene Therapy|Immunotherapy|Biomarker|伴随诊断/i => 研发设计
-
-# 统计学方法：关注贝叶斯、生存分析及因果推断（真实世界研究核心）
-/Biostatistics|Survival Analysis|Kaplan-Meier|Cox Model|Bayesian|Causal Inference|Propensity Score|Meta-analysis|Subgroup Analysis/i => 生物统计
-
-# 临床系统：EDC, CTMS, ePRO 等基础设施
-/EDC|Rave|Medidata|RedCap|CTMS|ePRO|eCOA|\bPV\b|Pharmacovigilance/i => 临床系统
-
-# ==============================================================================
-# BLOCK 2: 数据技术栈 (Data Tech Stack)
-# 核心：R与Python的双修，以及正在崛起的高性能工具(DuckDB/Polars)
-# ==============================================================================
-
-# R生态进阶：包含环境管理(renv)、管道操作(targets)及可视化
-/\bR\b|\bR Language\b|RStudio|Posit|Positron|Tidyverse|Dplyr|Ggplot2|Shiny|Quarto|Renv|Targets|Bioconductor/i => R语言生态
-
-# Python数据栈：加入高性能库 Polars 和现代构建工具
-/\bPython\b|Pandas|Polars|NumPy|SciPy|Scikit-learn|PyTorch|TensorFlow|Jupyter|Poetry|Conda|Ruff/i => Python数据栈
-
-# 数据库与数仓：关注本地分析神器 DuckDB 和现代数据栈
-/SQL|PostgreSQL|DuckDB|SQLite|Snowflake|Databricks|Data Lake|Parquet|Arrow/i => 数据存储
-
-# ==============================================================================
-# BLOCK 3: AI 人工智能 (AI, LLM & Engineering)
-# 核心：区分“模型本身”、“开发框架”和“本地部署技术”
-# ==============================================================================
-
-# 前沿大模型：覆盖闭源(GPT/Claude)与开源(Llama/DeepSeek/Mistral)
-/LLM|Transformer|GPT-4|GPT-5|Claude|Gemini|Llama|Mistral|DeepSeek|Qwen|Grok|Mixture of Experts|MoE/i => 大模型
-
-# AI工程化：RAG、Agent、提示词工程
-/RAG|Retrieval Augmented|LangChain|LlamaIndex|Vector DB|Pinecone|Chroma|Embedding|Prompt Engineering|Fine-tuning|LoRA|RLHF/i => AI工程化
-
-# AI Agent与自动化：自主智能体框架
-/Agent|Agentic|AutoGPT|CrewAI|LangGraph|Multi-agent|Copilot/i => AI智能体
-
-# 本地AI与量化：作为硬件党，这是你如何把大模型跑在自己显卡上的关键
-/Ollama|LM Studio|vLLM|GGUF|AWQ|GPTQ|Quantization|Local LLM|Whisper|Stable Diffusion|Flux|Midjourney/i => 本地AI生成
-
-# ==============================================================================
-# BLOCK 4: 独立开发与全栈 (Indie Dev & Fullstack)
-# 核心：快速构建产品的工具链，从前端到变现
-# ==============================================================================
-
-# 现代前端与UI：Shadcn是目前最火的组件库，Tailwind是标配
-/React|Next\.js|Vue|Nuxt|Svelte|SolidJS|Tailwind|Shadcn|Framer Motion|Three\.js/i => 前端技术
-
-# 后端与BaaS：独立开发者偏爱的“后端即服务”
-/Node\.js|TypeScript|Bun|Deno|Supabase|Firebase|Appwrite|PocketBase|Prisma|TRPC/i => 后端服务
-
-# 移动端开发：跨平台技术
-/Flutter|React Native|SwiftUI|Expo|Kotlin/i => 移动开发
-
-# 商业化与增长：独立开发的终极目标（MRR/SaaS）
-/SaaS|MicroSaaS|Indie Hacker|Build in Public|Stripe|Lemon Squeezy|Paddle|SEO|Product Hunt|MRR|ARR/i => 商业化
-
-# ==============================================================================
-# BLOCK 5: 开发者工具 (Dev Environment)
-# 核心：编辑器战国时代（VS Code vs Cursor vs Zed）
-# ==============================================================================
-
-# 现代IDE：Cursor(AI原生), Zed(高性能), Neovim(极客)
-/VS Code|VSCode|Cursor|Windsurf|Zed Editor|Neovim|IntelliJ|Fleet|Kiro|Trae|Google Antigravity/i => 开发工具
-
-# 容器与运维：Docker是基础
-/Docker|Kubernetes|K8s|Podman|CI\/CD|GitHub Actions|Vercel|Netlify|Cloudflare/i => 运维部署
-
-# ==============================================================================
-# BLOCK 6: 计算机硬件与极客装备 (Hardware & Home Lab)
-# 核心：生产力工具(GPU) + 玩具(树莓派/NAS) + 芯片架构
-# ==============================================================================
-
-# 显卡与算力：关注N卡生态和国产算力
-/NVIDIA|GPU|CUDA|RTX 4090|RTX 5090|H100|H800|Blackwell|AMD ROCm|Ascend|昇腾/i => 显卡算力
-
-# 芯片架构：Apple Silicon 和 RISC-V 是热点
-/Apple Silicon|M3 Max|M4 Chip|Mac Studio|Snapdragon X|ARM|RISC-V|Intel Core|Ryzen/i => 芯片架构
-
-# 家庭实验室与网络：NAS玩家关键词
-/Home Lab|Homelab|NAS|Synology|Unraid|TrueNAS|Raspberry Pi|Orange Pi|Mini PC|N100|WiFi 7|10GbE/i => 极客硬件
-
-# ==============================================================================
-# BLOCK 7: 科技媒体与行业趋势 (Tech Media & Industry Trends)
-# 核心：关注科技行业动态、产品发布、市场分析
-# ==============================================================================
-
-# 产品发布与评测：关注新品发布、评测报告
-/Product Launch|Review|Benchmark|Teardown|Unboxing|First Look|Hands-on|产品发布|评测|拆解/i => 产品评测
-
-# 行业分析与市场：关注市场趋势、投资、并购
-/Market Analysis|IPO|Acquisition|Merger|Funding|Investment|Valuation|市场分析|投资|并购|融资/i => 市场动态
-
-# 科技政策与监管：关注政策法规、反垄断、隐私保护
-/Tech Policy|Regulation|Antitrust|Privacy Law|GDPR|Data Protection|Compliance|科技政策|监管|反垄断/i => 科技政策
-
-# ==============================================================================
-# BLOCK 8: 新兴技术领域 (Emerging Technologies)
-# 核心：关注前沿技术、新兴应用场景
-# ==============================================================================
-
-# 量子计算与边缘计算：下一代计算范式
-/Quantum Computing|Quantum Supremacy|Edge Computing|Fog Computing|量子计算|边缘计算/i => 新兴计算
-
-# 区块链与Web3：去中心化技术栈
-/Blockchain|Web3|DeFi|NFT|Smart Contract|Ethereum|Bitcoin|Cryptocurrency|区块链|加密货币/i => 区块链Web3
-
-# 物联网与智能硬件：万物互联
-/IoT|Internet of Things|Smart Home|Wearable|Smart Watch|物联网|智能家居|可穿戴设备/i => 物联网
-
-# ==============================================================================
-# BLOCK 9: 开源与社区 (Open Source & Community)
-# 核心：开源项目、开发者社区、协作工具
-# ==============================================================================
-
-# 开源项目与许可：关注开源生态
-/Open Source|MIT License|Apache License|GPL|GitHub|GitLab|开源|开源许可/i => 开源生态
-
-# 开发者社区与协作：关注开发者工具和社区
-/Developer Community|Stack Overflow|Reddit|Discord|Slack|开发者社区|技术社区/i => 开发者社区
-
-# 版本控制与协作：现代开发工作流
-/Git|Version Control|Pull Request|Code Review|CI\/CD|DevOps|版本控制|代码审查/i => 开发协作
+# ═══════════════════════════════════════════════════════════════
+#                    TrendRadar 频率词配置文件
+# ═══════════════════════════════════════════════════════════════
+#
+# 这个文件用来设置你想关注的新闻关键词。
+# 系统会自动抓取包含这些关键词的热榜新闻推送给你。
+#
+# 文件分为两个区域：
+#   [GLOBAL_FILTER]  - 全局过滤区：排除不想看的内容
+#   [WORD_GROUPS]    - 词组定义区：设置想关注的关键词
+#
+# ═══════════════════════════════════════════════════════════════
 
 
-# ==============================================================================
-# BLOCK 10: 编程语言生态 (Programming Languages Ecosystem)
-# 核心：主流编程语言及其生态系统
-# ==============================================================================
+# ───────────────────────────────────────────────────────────────
+#                        全局过滤区
+# ───────────────────────────────────────────────────────────────
+# 在这里写入你不想看到的词，每行一个。
+# 包含这些词的新闻会被自动排除，不会出现在推送中。
+#
+# 使用方法：
+#   震惊              直接写词，包含"震惊"的新闻会被过滤
+#   /赌博|博彩/       用 /.../ 包裹可以匹配多个词（用 | 分隔）
 
-# 系统编程语言：性能导向
-/Rust|Go|Golang|C\+\+|Zig|系统编程|内存安全/i => 系统编程语言
+[GLOBAL_FILTER]
+# 过滤标题党
+震惊
 
-# Web开发语言：前后端技术栈
-/JavaScript|TypeScript|React|Vue|Angular|Node\.js|Deno|Bun|前端框架|后端框架/i => Web开发语言
 
-# 移动开发语言：跨平台解决方案
-/Swift|Kotlin|Dart|Flutter|React Native|移动开发|跨平台开发/i => 移动开发语言
 
-# ==============================================================================
-# BLOCK 11: 数据存储与管理 (Data Storage & Management)
-# 核心：数据库技术、存储解决方案
-# ==============================================================================
+# ───────────────────────────────────────────────────────────────
+#                        词组定义区
+# ───────────────────────────────────────────────────────────────
+# 在这里写入你想关注的关键词。
+# 每个词组用空行分隔，同一词组内的关键词是"或"的关系。
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      语法总览（快速参考）                      │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 关键词语法：
+#   关键词            普通关键词，标题包含即匹配
+#   /正则/            正则表达式匹配（自动忽略大小写）
+#   关键词 => 别名    给关键词指定显示别名
+#   [组别名]          词组第一行，给整组指定别名
+#   +关键词           必须词，所有必须词都要匹配才算匹配
+#   !关键词           过滤词，匹配则排除该条新闻（仅限当前词组）
+#   @数字             限制该词组最多显示多少条
+#
+# 显示名称优先级：
+#   1. 有组别名 → 显示组别名
+#   2. 没有组别名 → 显示各行别名拼接（用 " / " 连接）
+#   3. 没有别名 → 显示关键词本身
+#
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      基础用法（推荐新手）                      │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 1. 最简单：直接写关键词
+#    ────────────────────
+#    华为
+#
+#    效果：匹配所有包含"华为"的新闻
+#
+#
+# 2. 多个关键词归为一组
+#    ────────────────────
+#    华为
+#    鸿蒙
+#    任正非
+#
+#    效果：匹配包含"华为"或"鸿蒙"或"任正非"的新闻，统一显示为"华为 / 鸿蒙 / 任正非"
+#
+#
+# 3. 给词组起个名字（推荐）
+#    ────────────────────
+#    [华为]
+#    华为
+#    鸿蒙
+#    任正非
+#
+#    效果：同上，但显示名称为"华为"（更简洁）
+#
+#
+# ┌─────────────────────────────────────────────────────────────┐
+# │                      进阶用法（可选）                         │
+# └─────────────────────────────────────────────────────────────┘
+#
+# 4. 用正则表达式匹配多个词（一行搞定）
+#    ────────────────────
+#    /华为|鸿蒙|任正非/ => 华为
+#
+#    效果：匹配包含"华为"或"鸿蒙"或"任正非"的新闻，显示为"华为"
+#    说明：/.../ 里用 | 分隔多个词，=> 后面是显示名称
+#
+#    💡 不懂正则？问 AI：
+#       "帮我写一个正则表达式，匹配包含'华为'或'鸿蒙'或'任正非'的文本，
+#        格式要求：/正则/ => 显示名称"
+#
+#
+# 5. 精确匹配英文单词（避免误匹配）
+#    ────────────────────
+#    /\bAI\b/i => AI
+#
+#    说明：\b 表示单词边界，避免匹配到 "MAIL" 中的 "AI"
+#          /i 表示忽略大小写，"ai"、"AI"、"Ai" 都能匹配
+#
+#    💡 不懂正则？问 AI：
+#       "帮我写一个正则表达式，精确匹配英文单词'AI'（不匹配 MAIL 中的 AI），
+#        忽略大小写，格式要求：/正则/i => 显示名称"
+#
+#
+# 6. 排除特定内容
+#    ────────────────────
+#    [苹果公司]
+#    苹果
+#    !水果
+#    !果园
+#
+#    效果：匹配"苹果"但排除包含"水果"或"果园"的新闻
+#    说明：! 开头的词表示"排除"
+#
+#
+# 7. 限制显示条数
+#    ────────────────────
+#    [科技新闻]
+#    科技
+#    @5
+#
+#    效果：最多显示 5 条匹配的新闻
+#    说明：@数字 表示限制条数
+#
+#
+# 8. 必须同时包含多个词
+#    ────────────────────
+#    +苹果
+#    +发布会
+#
+#    效果：必须同时包含"苹果"和"发布会"才匹配
+#    说明：+ 开头的词表示"必须包含"
+#
+# ───────────────────────────────────────────────────────────────
 
-# 关系型数据库：传统RDBMS
-/PostgreSQL|MySQL|Oracle|SQL Server|SQLite|关系型数据库|RDBMS/i => 关系型数据库
+[WORD_GROUPS]
 
-# NoSQL数据库：非关系型存储
-/MongoDB|Redis|Cassandra|DynamoDB|Neo4j|Graph Database|NoSQL|非关系型数据库/i => NoSQL数据库
+# ═══════════════════════════════════════════════════════════════
+#                         企业与品牌
+# ═══════════════════════════════════════════════════════════════
 
-# 搜索与分析：全文搜索和数据分析
-/Elasticsearch|Solr|Apache Lucene|Full-text Search|全文搜索|搜索引擎/i => 搜索分析
+/胖东来|于东来/ => 胖东来
 
-# ==============================================================================
-# BLOCK 12: 学术研究与科学计算 (Academic Research & Scientific Computing)
-# 核心：学术论文、科学计算、研究工具
-# ==============================================================================
+/DeepSeek|梁文锋/i => DeepSeek
 
-# 学术出版与论文：科研发表
-/arXiv|Nature|Science|PLOS|Peer Review|Academic Publishing|学术论文|同行评议/i => 学术出版
+/华为|鸿蒙|HarmonyOS|任正非/i => 华为
 
-# 科学计算工具：数值计算和仿真
-/NumPy|SciPy|MATLAB|Mathematica|Julia|Scientific Computing|High Performance Computing|HPC|科学计算|高性能计算/i => 科学计算
+/比亚迪|王传福|byd/i => 比亚迪
 
-# 研究方法与统计：科研方法论
-/Statistical Analysis|Experimental Design|Reproducible Research|Open Science|统计分析|实验设计|可重现研究/i => 研究方法
+/大疆|\bDJI\b/i => 大疆
 
-==============================================================================
-# BLOCK 13: 新能源汽车与智能出行 (New Energy Vehicles & Smart Mobility)
-# 核心：造车新势力、电池技术、自动驾驶
-# ==============================================================================
+/宇树|王兴兴|Unitree/ => 宇树机器人
 
-# 新势力与传统车企：关注各大品牌动态
-/Tesla|BYD|Nio|Xpeng|Li Auto|Xiaomi Auto|Zeekr|Rivian|Lucid|Polestar|Toyota|Volkswagen|BMW|Mercedes|比亚迪|蔚来|小鹏|理想|小米汽车|极氪|鸿蒙智行|特斯拉/i => 车企动态
+/智元|灵犀|稚晖君|彭志辉|AgiBot/ => 智元机器人
+/众擎|EngineAI|赵同阳/ => 众擎机器人
 
-# 电池与三电技术：核心零部件
-/Battery|Lithium|Solid-state Battery|Sodium-ion|Blade Battery|Qilin Battery|800V|SiC|Charging Pile|Supercharger|电池|固态电池|刀片电池|麒麟电池|充电桩|超充|续航里程|三电系统/i => 三电技术
+/黑神话|冯骥/ => 黑神话悟空
 
-# 智能驾驶与座舱：智能化体验
-/Autonomous Driving|Self-driving|FSD|NOA|Pilot|L2\+|L3|L4|Robotaxi|Waymo|Apollo|HarmonyOS Cockpit|CarPlay|Smart Cockpit|自动驾驶|智能座舱|无人驾驶|辅助驾驶|智驾/i => 智能驾驶
-"
+/影之刃零|梁其伟/ => 影之刃零
+
+/三体|流浪地球|刘慈欣|郭帆/ => 三体/流浪地球
+
+申奥
+
+/京东|刘强东/ => 京东
+
+/字节|bytedance|张一鸣/i => 字节跳动
+
+/qwen|minimax|glm/ => 国产开源模型
+
+/特斯拉|马斯克/ => 特斯拉
+
+/英伟达|\bNVIDIA\b|黄仁勋/i => 英伟达
+/\bAMD\b/i => AMD
+
+/微软|\bMicrosoft\b/i => 微软
+/谷歌|\bgoogle\b|\bgemini\b|\bdeepMind\b/i => 谷歌
+/\biphone\b|\bipad\b|\bmac\b|\bios\b/i => 苹果
+
+/\bchatgpt\b|\bopenai\b|\bsora\b/i => OpenAI
+/\bclaude\b|anthropic/i => Claude
+
+
+# ═══════════════════════════════════════════════════════════════
+#                         国家与地区
+# ═══════════════════════════════════════════════════════════════
+
+[中国]
+国产
+中国
+
+[东亚]
+日本
+朝鲜
+韩国
+
+[北美]
+美国
+加拿大
+
+[西欧]
+法国
+英国
+
+/俄罗斯|俄国/ => 俄罗斯
+
+印度
+
+
+# ═══════════════════════════════════════════════════════════════
+#                         科技领域
+# ═══════════════════════════════════════════════════════════════
+
+[AI 相关]
+/(?<![a-zA-Z])ai(?![a-zA-Z])/i
+人工智能
+
+[芯片]
+芯片
+光刻机
+半导体
+
+/水电|雅鲁藏布江/ => 水电
+/光伏|太阳能/ => 光伏
+核能
+能源
+
+/自动驾驶|无人驾驶|智驾/ => 自动驾驶
+
+机器人
+/机械狗|四足/ => 机器狗
+具身智能
+
+/月球|登月|火星|宇宙|飞船|航天|空间站|卫星/ => 航天
+
+# 前沿科技
+量子
+脑机
+基因
+
+# 产业政策
+生产力
