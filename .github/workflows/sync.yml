@@ -1,11 +1,9 @@
 # Sync from template sansan0/TrendRadar using a PAT to avoid permission errors
 name: Sync from template sansan0/TrendRadar
-
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
-
+# on:
+  # workflow_dispatch:
+  # schedule:
+    # - cron: '0 0 * * *'
 permissions:
   contents: write
   pull-requests: write
