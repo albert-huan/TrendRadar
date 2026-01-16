@@ -60,492 +60,301 @@ rss:
   enabled: true                       # 是否启用 RSS 抓取
 
   # 文章新鲜度过滤配置（全局默认值）
+  # 过滤掉发布时间超过指定天数的旧文章，避免同一篇文章重复出现在推送中
+  #
+  # 过滤逻辑：
+  #   - 文章发布时间距当前时间（app.timezone 时区）超过 N 天则不推送
+  #   - 无发布时间的文章会被保留（不过滤）
+  #
+  # ⚠️ 过滤时机：在推送阶段过滤
+  #    - 所有文章都会存入数据库（MCP Server 的 AI 查询仍可访问）
+  #    - 只有新鲜的文章会被推送到通知渠道
   freshness_filter:
     enabled: true                     # 是否启用新鲜度过滤（默认启用）
     max_age_days: 3                   # 最大文章年龄（天）
+                                      # - 正整数：只推送 N 天内的文章
+                                      # - 0：禁用过滤，推送所有文章
 
+  # 单个 feed 可配置 max_age_days 覆盖全局设置：
+  # - 不配置：使用全局 freshness_filter.max_age_days（默认 3 天）
+  # - 正整数：覆盖全局设置，只推送此天数内的文章
+  # - 0：禁用此频道的新鲜度过滤，推送所有文章
   feeds:
-    # --- General / High Frequency ---
     - id: "hacker-news"
       name: "Hacker News"
       url: "https://hnrss.org/frontpage"
+      # max_age_days: 1               # 示例：只推送1天内的文章
+
     - id: "ruanyifeng"
       name: "阮一峰的网络日志"
       url: "http://www.ruanyifeng.com/blog/atom.xml"
-      max_age_days: 7
+      # max_age_days: 7               # 示例：推送7天内的文章（更新较慢的博客）
+    
+    - id: "yahoo-finance"
+      name: "雅虎财经"
+      url: "https://finance.yahoo.com/news/rssindex"
+      enabled: false                  # 禁用
 
-    # --- Block 1: Clinical & Pharma (医药研发) ---
-    - id: "fda-drugs"
-      name: "FDA Drugs"
-      url: "https://www.fda.gov/about-fda/contact-fda/subscribe-podcasts-and-news-feeds"
-    - id: "stat-news"
-      name: "Stat News (Pharma)"
-      url: "https://www.statnews.com/feed/"
-    - id: "biospace"
-      name: "BioSpace"
-      url: "https://www.biospace.com/rss/news"
-    - id: "nature-medicine"
-      name: "Nature Medicine"
-      url: "https://www.nature.com/nm.rss"
-    - id: "nejm"
-      name: "New England Journal of Medicine"
-      url: "https://www.nejm.org/action/showFeed?type=etoc&feed=rss"
-    - id: "fierce-pharma"
-      name: "Fierce Pharma"
-      url: "https://www.fiercepharma.com/rss/xml"
-    - id: "pharma-times"
-      name: "PharmaTime"
-      url: "https://www.pharmatimes.com/rss.xml"
-    - id: "regulatory-affairs"
-      name: "Regulatory Affairs Professionals Society"
-      url: "https://www.raps.org/news-and-articles/rss"
-
-    # --- Block 2: Data Tech (数据技术) ---
-    - id: "r-bloggers"
-      name: "R-bloggers"
-      url: "https://www.r-bloggers.com/feed/"
-    - id: "real-python"
-      name: "Real Python"
-      url: "https://realpython.com/atom.xml"
-    - id: "kdnuggets"
-      name: "KDnuggets"
-      url: "https://www.kdnuggets.com/feed"
-    - id: "rstudio-blog"
-      name: "Posit (RStudio) Blog"
-      url: "https://posit.co/blog/index.xml"
-    - id: "python-weekly"
-      name: "Python Weekly"
-      url: "https://www.pythonweekly.com/rss.xml"
-    - id: "data-science-central"
-      name: "Data Science Central"
-      url: "https://www.datasciencecentral.com/feed/"
-    - id: "towards-ai"
-      name: "Towards AI"
-      url: "https://pub.towardsai.net/feed"
-    - id: "analytics-vidhya"
-      name: "Analytics Vidhya"
-      url: "https://www.analyticsvidhya.com/feed/"
-    - id: "kaggle-blog"
-      name: "Kaggle Blog"
-      url: "https://medium.com/feed/kaggle-blog"
-
-    # --- Block 3: AI & LLM (人工智能) ---
-    - id: "anthropic-blog"
-      name: "Anthropic Blog"
-      url: "https://www.anthropic.com/news.rss"
-    - id: "deepmind-blog"
-      name: "DeepMind Blog"
-      url: "https://deepmind.google/discover/blog/rss.xml"
-    - id: "ai-research"
-      name: "AI Research"
-      url: "https://ai.googleblog.com/feeds/posts/default"
-    - id: "machine-learning-mastery"
-      name: "Machine Learning Mastery"
-      url: "https://machinelearningmastery.com/feed/"
-    - id: "distill-pub"
-      name: "Distill"
-      url: "https://distill.pub/rss.xml"
-    - id: "papers-with-code"
-      name: "Papers With Code"
-      url: "https://paperswithcode.com/latest.rss"
-
-    # --- Block 4: Indie Dev & Mobile (独立开发与移动端) ---
-    - id: "indie-hackers"
-      name: "Indie Hackers"
-      url: "https://www.indiehackers.com/feed.xml"
-    - id: "techcrunch"
-      name: "TechCrunch"
-      url: "https://techcrunch.com/feed/"
-    - id: "ycombinator"
-      name: "Y Combinator"
-      url: "https://blog.ycombinator.com/feed/"
-    - id: "startup-grind"
-      name: "Startup Grind"
-      url: "https://medium.com/feed/startup-grind"
-    - id: "first-round-review"
-      name: "First Round Review"
-      url: "https://review.firstround.com/rss"
-    - id: "android-developers"
-      name: "Android Developers Blog"
-      url: "https://android-developers.googleblog.com/feeds/posts/default"
-    - id: "ios-dev-weekly"
-      name: "iOS Dev Weekly"
-      url: "https://iosdevweekly.com/issues.rss"
-    - id: "flutter-medium"
-      name: "Flutter Medium"
-      url: "https://medium.com/flutter/feed"
-    - id: "react-native-blog"
-      name: "React Native Blog"
-      url: "https://reactnative.dev/blog/rss.xml"
-    - id: "xamarin-blog"
-      name: "Xamarin Blog"
-      url: "https://devblogs.microsoft.com/xamarin/feed/"
-    - id: "unity-blog"
-      name: "Unity Blog"
-      url: "https://blog.unity.com/feed"
-    - id: "unreal-blog"
-      name: "Unreal Engine Blog"
-      url: "https://www.unrealengine.com/en-US/feed"
-    - id: "gamasutra"
-      name: "Game Developer"
-      url: "https://www.gamedeveloper.com/rss.xml"
-    - id: "smashing-magazine"
-      name: "Smashing Magazine"
-      url: "https://www.smashingmagazine.com/feed/"
-    - id: "ux-planet"
-      name: "UX Planet"
-      url: "https://uxplanet.org/feed"
-    - id: "adobe-blog"
-      name: "Adobe Blog"
-      url: "https://blog.adobe.com/en/topics/creativity.rss"
-    - id: "figma-blog"
-      name: "Figma Blog"
-      url: "https://www.figma.com/blog/rss/"
-
-    # --- Block 5: Dev Tools & Infrastructure (开发工具与基建) ---
-    - id: "github-blog"
-      name: "GitHub Blog"
-      url: "https://github.blog/feed/"
-    - id: "vscode-blog"
-      name: "VS Code Blog"
-      url: "https://code.visualstudio.com/feed.xml"
-    - id: "docker-blog"
-      name: "Docker Blog"
-      url: "https://www.docker.com/blog/feed/"
-    - id: "kubernetes-blog"
-      name: "Kubernetes Blog"
-      url: "https://kubernetes.io/feed.xml"
-    - id: "jetbrains-blog"
-      name: "JetBrains Blog"
-      url: "https://blog.jetbrains.com/feed/"
-    - id: "aws-blog"
-      name: "AWS Blog"
-      url: "https://aws.amazon.com/blogs/aws/feed/"
-    - id: "azure-blog"
-      name: "Microsoft Azure Blog"
-      url: "https://azure.microsoft.com/en-us/blog/feed/"
-    - id: "gcp-blog"
-      name: "Google Cloud Blog"
-      url: "https://cloud.google.com/blog/rss"
-    - id: "cloudflare-blog"
-      name: "Cloudflare Blog"
-      url: "https://blog.cloudflare.com/rss/"
-    - id: "digitalocean-blog"
-      name: "DigitalOcean Blog"
-      url: "https://www.digitalocean.com/blog/rss.xml"
-    - id: "hashicorp-blog"
-      name: "HashiCorp Blog"
-      url: "https://www.hashicorp.com/blog/feed.xml"
-
-    # --- Block 6: Hardware & IoT (硬件与物联网) ---
-    - id: "nvidia-developer"
-      name: "NVIDIA Developer Blog"
-      url: "https://developer.nvidia.com/blog/feed"
-    - id: "nvidia-hpc"
-      name: "NVIDIA HPC Blog"
-      url: "https://developer.nvidia.com/blog/tag/hpc/feed/"
-    - id: "iot-world-today"
-      name: "IoT World Today"
-      url: "https://www.iotworldtoday.com/feed"
-    - id: "embedded-com"
-      name: "Embedded.com"
-      url: "https://www.embedded.com/feed/"
-    - id: "arduino-blog"
-      name: "Arduino Blog"
-      url: "https://blog.arduino.cc/feed/"
-    - id: "adafruit-blog"
-      name: "Adafruit Blog"
-      url: "https://blog.adafruit.com/feed/"
-
-    # --- Block 7: Tech Media (科技媒体) ---
-    - id: "the-verge"
-      name: "The Verge"
-      url: "https://www.theverge.com/rss/index.xml"
-    - id: "ars-technica"
-      name: "Ars Technica"
-      url: "https://feeds.arstechnica.com/arstechnica/index"
-    - id: "wired"
-      name: "Wired"
-      url: "https://www.wired.com/feed/rss"
-    - id: "mit-tech-review"
-      name: "MIT Technology Review"
-      url: "https://www.technologyreview.com/feed/"
-    - id: "ieee-spectrum"
-      name: "IEEE Spectrum"
-      url: "https://spectrum.ieee.org/rss/fulltext"
-    - id: "techradar"
-      name: "TechRadar"
-      url: "https://www.techradar.com/rss"
-    - id: "engadget"
-      name: "Engadget"
-      url: "https://www.engadget.com/rss.xml"
-    - id: "zdnet"
-      name: "ZDNet"
-      url: "https://www.zdnet.com/news/rss.xml"
-    - id: "computerworld"
-      name: "Computerworld"
-      url: "https://www.computerworld.com/index.rss"
-    - id: "infoworld"
-      name: "InfoWorld"
-      url: "https://www.infoworld.com/index.rss"
-    # 中文媒体
-    - id: "ithome"
-      name: "IT之家"
-      url: "https://www.ithome.com/rss/"
-    - id: "cnbeta"
-      name: "cnBeta"
-      url: "https://www.cnbeta.com/backend.php"
-    - id: "pingwest"
-      name: "PingWest品玩"
-      url: "https://www.pingwest.com/feed"
-    - id: "geekpark"
-      name: "极客公园"
-      url: "http://www.geekpark.net/rss"
-    - id: "leiphone"
-      name: "雷锋网"
-      url: "https://www.leiphone.com/feed"
-
-    # --- Block 8: Emerging & Crypto (新兴技术) ---
-    - id: "coindesk"
-      name: "CoinDesk"
-      url: "https://www.coindesk.com/arc/outboundfeeds/rss/"
-    - id: "cointelegraph"
-      name: "Cointelegraph"
-      url: "https://cointelegraph.com/rss"
-    - id: "fintech-news"
-      name: "FinTech News"
-      url: "https://www.fintechnews.org/feed/"
-    - id: "ethereum-blog"
-      name: "Ethereum Blog"
-      url: "https://blog.ethereum.org/feed.xml"
-
-    # --- Block 9: Open Source & Community (开源与社区) ---
-    - id: "opensource-com"
-      name: "Opensource.com"
-      url: "https://opensource.com/feed"
-    - id: "linux-com"
-      name: "Linux.com"
-      url: "https://www.linux.com/feed/"
-    - id: "cncf-blog"
-      name: "CNCF Blog"
-      url: "https://www.cncf.io/blog/feed/"
-    - id: "apache-blog"
-      name: "Apache Software Foundation"
-      url: "https://blogs.apache.org/foundation/feed/entries/atom"
-    - id: "osi-blog"
-      name: "Open Source Initiative"
-      url: "https://opensource.org/feed"
-    - id: "dev-to"
-      name: "DEV Community"
-      url: "https://dev.to/feed"
-
-    # --- Block 10: Languages (编程语言) ---
-    - id: "rust-blog"
-      name: "Rust Blog"
-      url: "https://blog.rust-lang.org/feed.xml"
-    - id: "golang-blog"
-      name: "Go Blog"
-      url: "https://go.dev/blog/feed.atom"
-    - id: "nodejs-blog"
-      name: "Node.js Blog"
-      url: "https://nodejs.org/en/feed/blog.xml"
-    - id: "react-blog"
-      name: "React Blog"
-      url: "https://react.dev/rss.xml"
-    - id: "vue-blog"
-      name: "Vue.js Blog"
-      url: "https://blog.vuejs.org/feed.rss"
-    - id: "swift-blog"
-      name: "Swift Blog"
-      url: "https://www.swift.org/blog/rss.xml"
-    - id: "kotlin-blog"
-      name: "Kotlin Blog"
-      url: "https://blog.jetbrains.com/kotlin/feed/"
-
-    # --- Block 11: Data Storage (数据库) ---
-    - id: "mongodb-blog"
-      name: "MongoDB Blog"
-      url: "https://www.mongodb.com/blog/rss"
-    - id: "redis-blog"
-      name: "Redis Blog"
-      url: "https://redis.io/blog/rss.xml"
-    - id: "postgresql-news"
-      name: "PostgreSQL News"
-      url: "https://www.postgresql.org/news.rss"
-    - id: "elastic-blog"
-      name: "Elastic Blog"
-      url: "https://www.elastic.co/blog/feed"
-    - id: "neo4j-blog"
-      name: "Neo4j Blog"
-      url: "https://neo4j.com/blog/feed/"
-
-    # --- Block 12: Research & Science (学术研究) ---
-    - id: "arxiv-cs"
-      name: "arXiv Computer Science"
-      url: "http://export.arxiv.org/rss/cs"
-    - id: "arxiv-stat"
-      name: "arXiv Statistics"
-      url: "http://export.arxiv.org/rss/stat"
-    - id: "arxiv-math"
-      name: "arXiv Mathematics"
-      url: "http://export.arxiv.org/rss/math"
-    - id: "nature-news"
-      name: "Nature News"
-      url: "https://www.nature.com/nature.rss"
-    - id: "science-news"
-      name: "Science News"
-      url: "https://www.science.org/rss/news_current.xml"
-    - id: "plos-one"
-      name: "PLOS ONE"
-      url: "https://journals.plos.org/plosone/feed/atom"
-    - id: "scipy-blog"
-      name: "SciPy Blog"
-      url: "https://blog.scientific-python.org/feed.xml"
-    - id: "hpc-wire"
-      name: "HPCwire"
-      url: "https://www.hpcwire.com/feed/"
-
-    # --- Block 13: Auto & Mobility (智能出行) ---
-    - id: "electrek"
-      name: "Electrek"
-      url: "https://electrek.co/feed/"
-    - id: "insideevs"
-      name: "InsideEVs"
-      url: "https://insideevs.com/rss/articles/all/"
-    - id: "cnevpost"
-      name: "CnEVPost"
-      url: "https://cnevpost.com/feed/"
-    - id: "green-car-reports"
-      name: "Green Car Reports"
-      url: "https://www.greencarreports.com/rss/"
-    - id: "cleantechnica"
-      name: "CleanTechnica"
-      url: "https://cleantechnica.com/feed/"
-
-    # --- Block 14: Security (网络安全) ---
-    - id: "krebs-security"
-      name: "Krebs on Security"
-      url: "https://krebsonsecurity.com/feed/"
-    - id: "schneier-security"
-      name: "Schneier on Security"
-      url: "https://www.schneier.com/feed/atom/"
-    - id: "threatpost"
-      name: "Threatpost"
-      url: "https://threatpost.com/feed/"
-    - id: "dark-reading"
-      name: "Dark Reading"
-      url: "https://www.darkreading.com/rss_simple.asp"
-    - id: "security-week"
-      name: "Security Week"
-      url: "https://www.securityweek.com/feed/"
-    - id: "cisa-alerts"
-      name: "CISA Alerts"
-      url: "https://www.cisa.gov/cybersecurity-advisories/all.xml"
+    # 自定义源示例
+    # - id: "custom-feed"
+    #   name: "自定义源"
+    #   url: "https://example.com/feed.xml"
+    #   enabled: false
+    #   max_age_days: 0               # 示例：禁用过滤，推送所有文章
 
 
 # ===============================================================
 # 4. 报告模式
+#
+# 🔸 daily（当日汇总模式）
+#    • 推送时机：按时推送(默认每小时推送一次)
+#    • 显示内容：当日所有匹配新闻 + 新增新闻区域
+#    • 适用场景：日报总结、全面了解当日热点趋势
+#
+# 🔸 current（当前榜单模式）
+#    • 推送时机：按时推送(默认每小时推送一次)
+#    • 显示内容：当前榜单匹配新闻 + 新增新闻区域
+#    • 适用场景：实时热点追踪、了解当前最火的内容
+#
+# 🔸 incremental（增量监控模式）
+#    • 推送时机：有新增才推送
+#    • 显示内容：新出现的匹配频率词新闻
+#    • 适用场景：避免重复信息干扰
 # ===============================================================
 report:
   mode: "current"                     # 可选: daily | current | incremental
   display_mode: "keyword"             # 可选: keyword | platform
+                                      # keyword: 按关键词分组显示（默认）
+                                      # platform: 按平台/来源分组显示
   rank_threshold: 5                   # 排名高亮阈值
-  sort_by_position_first: true        # true=按配置位置排序，false=按热点条数排序
-  max_news_per_keyword: 10            # 每个关键词最大显示数量（0=不限制）
+  sort_by_position_first: false       # true=按配置位置排序，false=按热点条数排序
+  max_news_per_keyword: 0             # 每个关键词最大显示数量（0=不限制）
   reverse_content_order: false        # false=热点词汇统计在前，true=新增热点新闻在前
 
 
 # ===============================================================
 # 5. 推送通知
+#
+# ⚠️ 重要安全警告 ⚠️
+#
+# 🔴 请务必妥善保管好 webhooks，不要公开!!!
+# 🔴 如果你以 fork 的方式部署在 GitHub 上，请勿在此填写
+# 🔴 而是将 webhooks 填入 GitHub Secrets
+#    (Settings → Secrets and variables → Actions)
+# 🔴 否则：
+#    - 轻则：手机上收到大量垃圾广告推送
+#    - 重则：webhook 被滥用造成严重安全隐患
+#
+# 📌 多账号支持说明
+#
+# • 使用分号(;)分隔多个账号，如："url1;url2;url3"
+# • 需要配对的配置（如 Telegram 的 token 和 chat_id）数量必须一致
+# • 每个渠道最多支持 max_accounts_per_channel 个账号
+# • 邮箱已支持多收件人（逗号分隔）
 # ===============================================================
 notification:
   enabled: true                       # 是否启用通知功能
 
-  # 🕐 推送时间窗口控制
+  # 🕐 推送时间窗口控制（可选功能）
+  # 用途：限制推送的时间范围，避免非工作时间打扰
+  # 适用场景：
+  #   - 只想在工作日白天接收推送（如 09:00-18:00）
+  #   - 希望在晚上固定时间收到汇总（如 20:00-22:00）
+  # 注意：GitHub Actions 执行时间不稳定，时间范围建议至少留足 2 小时
+  #       如果想要精准的定时推送，建议使用 Docker 部署在个人服务器上
   push_window:
-    enabled: true                     # 是否启用推送时间窗口控制
-    start: "08:00"                    # 开始时间（北京时间）
-    end: "23:00"                      # 结束时间（北京时间）
-    once_per_day: true                # true=窗口内只推送一次
+    enabled: false                    # 是否启用推送时间窗口控制
+    start: "20:00"                    # 开始时间（北京时间）
+    end: "22:00"                      # 结束时间（北京时间）
+    once_per_day: true                # true=窗口内只推送一次，false=窗口内每次执行都推送
+
+  # 📋 独立展示区配置（可选功能）
+  # 用途：将指定平台的完整热榜/RSS 单独展示，不受关键词过滤影响
+  # 适用场景：
+  #   - 想完整查看某个平台的热榜排名
+  #   - RSS 源内容较少，希望全部展示而非只显示关键词匹配的
+  # 注意：同一新闻可能同时出现在关键词匹配区和独立展示区
+  standalone_display:
+    enabled: false                    # 是否启用独立展示区
+    platforms: []                     # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
+    rss_feeds: []                     # RSS 源 ID 列表（如 ["hacker-news"]）
+    max_items: 20                     # 每个源最多展示条数（0=不限制）
 
   # 推送渠道配置
   channels:
     feishu:
-      webhook_url: ""
+      webhook_url: ""                 # 飞书机器人 webhook URL
+
     dingtalk:
-      webhook_url: ""
+      webhook_url: ""                 # 钉钉机器人 webhook URL
+
     wework:
-      webhook_url: ""
-      msg_type: "markdown"
+      webhook_url: ""                 # 企业微信机器人 webhook URL
+      msg_type: "markdown"            # 消息类型：markdown(群机器人) | text(个人微信应用)
+
     telegram:
-      bot_token: ""
-      chat_id: ""
+      bot_token: ""                   # Telegram Bot Token
+      chat_id: ""                     # Telegram Chat ID
+
     email:
-      from: ""
-      password: ""
-      to: ""
-      smtp_server: ""
-      smtp_port: ""
+      from: ""                        # 发件人邮箱地址
+      password: ""                    # 发件人邮箱密码或授权码
+      to: ""                          # 收件人邮箱，多个用逗号分隔
+      smtp_server: ""                 # SMTP 服务器（可选，留空自动识别）
+      smtp_port: ""                   # SMTP 端口（可选，留空自动识别）
+
     ntfy:
-      server_url: "https://ntfy.sh"
-      topic: ""
-      token: ""
+      server_url: "https://ntfy.sh"   # ntfy 服务器地址（可改为自托管）
+      topic: ""                       # ntfy 主题名称
+      token: ""                       # ntfy 访问令牌（可选，用于私有主题）
+
     bark:
-      url: ""
+      url: ""                         # Bark 推送 URL（格式：https://api.day.app/your_device_key）
+
     slack:
-      webhook_url: ""
+      webhook_url: ""                 # Slack Incoming Webhook URL
+
+    generic_webhook:
+      webhook_url: ""                 # 通用 Webhook URL（支持 Discord、Matrix、IFTTT 等）
+      payload_template: ""            # JSON 模板，支持 {title} 和 {content} 占位符
+                                      # 示例：{"content": "{content}"}
+                                      # 留空则使用默认格式：{"title": "{title}", "content": "{content}"}
 
 
 # ===============================================================
 # 6. 存储配置
 # ===============================================================
 storage:
+  # 存储后端选择
+  # - auto: 自动选择（GitHub Actions 且配置了远程存储 → remote，否则 → local）
+  # - local: 本地 SQLite + TXT/HTML 文件
+  # - remote: 远程云存储（S3 兼容协议，支持 R2/OSS/COS 等）
   backend: "auto"
+
+  # 数据格式选项
   formats:
-    sqlite: true
-    txt: false
-    html: true
+    sqlite: true                      # 主存储（必须启用）
+    txt: false                        # 是否生成 TXT 快照
+    html: true                       # 是否生成 HTML 报告（⚠️ 邮件推送必须设为 true）
+
+  # 本地存储配置
   local:
-    data_dir: "output"
-    retention_days: 0
+    data_dir: "output"                # 数据目录
+    retention_days: 0                 # 保留天数（0=永久保留）
+
+  # 远程存储配置（S3 兼容协议）
+  # 支持: Cloudflare R2, 阿里云 OSS, 腾讯云 COS, AWS S3, MinIO 等
+  # 建议将敏感信息配置在 GitHub Secrets 或环境变量中
   remote:
-    retention_days: 0
-    endpoint_url: ""
-    bucket_name: ""
-    access_key_id: ""
-    secret_access_key: ""
-    region: ""
+    retention_days: 0                 # 保留天数（0=永久保留）
+    # S3 兼容配置（或使用环境变量 S3_ENDPOINT_URL 等）
+    endpoint_url: ""                  # 服务端点
+                                      # Cloudflare R2: https://<account_id>.r2.cloudflarestorage.com
+                                      # 阿里云 OSS: https://oss-cn-hangzhou.aliyuncs.com
+                                      # 腾讯云 COS: https://cos.ap-guangzhou.myqcloud.com
+    bucket_name: ""                   # 存储桶名称
+    access_key_id: ""                 # 访问密钥 ID
+    secret_access_key: ""             # 访问密钥
+    region: ""                        # 区域（可选，部分服务商需要）
+
+  # 数据拉取配置（从远程同步到本地）
+  # 用于 MCP Server 等场景：爬虫存到远程，MCP 拉取到本地分析
   pull:
-    enabled: false
-    days: 7
+    enabled: false                    # 是否启用启动时自动拉取
+    days: 7                           # 拉取最近 N 天的数据
 
 
 # ===============================================================
-# 7. 高级设置
+# 7. AI 分析功能
+#
+# 使用 AI 大模型对推送内容进行深度分析
+# 支持 OpenAI、Anthropic、DeepSeek等兼容接口
+# ===============================================================
+ai_analysis:
+  enabled: true                    # 是否启用 AI 分析
+
+  # AI 提供商配置
+  # 支持的提供商:
+  #   - deepseek: DeepSeek（默认）
+  #   - openai: OpenAI
+  #   - gemini: Google Gemini
+  #   - custom: 自定义 OpenAI 兼容接口（需填写完整 base_url）
+  provider: "deepseek"              # 提供商
+  api_key: ""                       # API Key（建议使用环境变量 AI_API_KEY）
+
+  model: "deepseek-chat"            # 模型名称
+                                    # DeepSeek: deepseek-chat, deepseek-reasoner
+                                    # OpenAI: o3-mini, o1, gpt-4o
+                                    # Gemini: gemini-2.5-flash, gemini-2.5-pro
+
+  base_url: ""                      # 完整 API 地址（可选）
+                                    # 留空则使用提供商默认端点
+                                    # 其他提供商必须填写完整 URL
+                                    # 示例: https://api.openai.com/v1/chat/completions
+
+  timeout: 90                       # 请求超时（秒）
+
+  # 推送模式（仅在 enabled: true 时生效）
+  # - only_analysis: 仅推送 AI 分析结果（若开启了“独立展示区”则一并保留，屏蔽原始热榜/RSS 列表）
+  # - both: 两者都推送（分析追加在原始内容后）
+  # 注：如果不需要 AI 分析，请将上方 enabled 设为 false，无需使用 push_mode 控制
+  push_mode: "both"
+
+  # 分析选项
+  max_news_for_analysis: 50         # 参与分析的新闻数量上限（控制成本关键项）
+                                    # api 成本估算 (仅供参考)
+                                      # 按默认推送频率和模型
+                                      # GitHub Action 约 0.1 元/天
+                                      # Docker 部署约 0.2 元/天
+
+  include_rss: false                # 是否包含 RSS 内容进行分析
+
+  # 提示词配置文件路径（相对于 config 目录）
+  prompt_file: "ai_analysis_prompt.txt"
+
+
+# ===============================================================
+# 8. 高级设置（一般无需修改）
 # ===============================================================
 advanced:
+  # 调试模式
+  debug: false
+
+  # 版本检查
   version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version"
+  mcp_version_check_url: "https://raw.githubusercontent.com/sansan0/TrendRadar/refs/heads/master/version_mcp"
+
+  # 爬虫设置
   crawler:
-    enabled: true
-    request_interval: 1000
-    use_proxy: false
+    enabled: true                     # 是否启用爬取新闻功能
+    request_interval: 2000            # 请求间隔（毫秒）
+    use_proxy: false                  # 是否启用代理
     default_proxy: "http://127.0.0.1:10801"
+
+  # RSS 设置
   rss:
-    request_interval: 2000
-    timeout: 15
-    use_proxy: false
-    proxy_url: ""
-    notification_enabled: true
+    request_interval: 1000            # 请求间隔（毫秒）
+    timeout: 15                       # 请求超时（秒）
+    use_proxy: false                  # 是否使用代理
+    proxy_url: ""                     # RSS 专属代理（留空则使用 crawler.default_proxy）
+    notification_enabled: true        # 是否启用 RSS 通知推送
+
+  # 排序权重（用于重新排序不同平台的热搜）
+  # 合起来等于 1
   weight:
-    rank: 0.6
-    frequency: 0.3
-    hotness: 0.1
-  max_accounts_per_channel: 3
+    rank: 0.6                         # 排名权重
+    frequency: 0.3                    # 频次权重
+    hotness: 0.1                      # 热度权重
+
+  # 多账号限制
+  max_accounts_per_channel: 3         # 每个渠道最大账号数量
+
+  # 消息分批大小（字节）- 内部配置，请勿修改
   batch_size:
     default: 4000
     dingtalk: 20000
     feishu: 30000
     bark: 4000
     slack: 4000
-  batch_send_interval: 3
+  batch_send_interval: 3              # 批次发送间隔（秒）
   feishu_message_separator: "━━━━━━━━━━━━━━━━━━━"
