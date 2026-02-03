@@ -1,5 +1,5 @@
 # Sync from template sansan0/TrendRadar using a PAT to avoid permission errors
-name: Sync from template sansan0/TrendRadar
+name: Sync from template
 on:
   workflow_dispatch:
   schedule:
