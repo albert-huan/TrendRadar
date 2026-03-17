@@ -25,6 +25,7 @@
 #
 # 使用方法：
 #   震惊              直接写词，包含"震惊"的新闻会被过滤
+#   /赌博|博彩/       用 /.../ 包裹可以匹配多个词（用 | 分隔）
 
 [GLOBAL_FILTER]
 # 过滤标题党
@@ -148,587 +149,110 @@
 
 [WORD_GROUPS]
 
-# ==============================================================================
-# BLOCK 1: 临床数据科学与医药研发 (Clinical Domain & Regs)
-# ==============================================================================
+# ═══════════════════════════════════════════════════════════════
+#                         企业与品牌
+# ═══════════════════════════════════════════════════════════════
 
-# 监管法规
-CDE
-NMPA
-药审中心
-FDA
-EMA
-ICH
-PMDA
-GCP
-21 CFR Part 11
-HIPAA
-GDPR
-Helsinki
+/胖东来|于东来/ => 胖东来
 
-# 数据标准
-CDISC
-SDTM
-ADaM
-SEND
-Define.xml
-ODM
-OMOP
-OHDSI
-FHIR
-HL7
-DICOM
+/深度求索|幻方量化|梁文锋|\bDeepSeek\b/ => DeepSeek
 
-# 研发与试验设计
-Clinical Trial
-RCT
-Adaptive Design
-Basket Trial
-Umbrella Trial
-ADC
-CGT
-Gene Therapy
-Immunotherapy
-Biomarker
-伴随诊断
+/华为|任正非|余承东|鸿蒙|海思|昇腾|鲲鹏|\bHUAWEI\b|\bHarmonyOS\b|\bHiSilicon\b/ => 华为
 
-# 统计学方法
-Biostatistics
-Survival Analysis
-Kaplan-Meier
-Cox Model
-Bayesian
-Causal Inference
-Propensity Score
-Meta-analysis
-Subgroup Analysis
+/比亚迪|王传福|方程豹|腾势|仰望|弗迪|刀片电池|云辇|\bBYD\b|\bDenza\b|\bYangwang\b/ => 比亚迪
 
-# 临床系统
-EDC
-Rave
-Medidata
-RedCap
-CTMS
-ePRO
-eCOA
-PV
-Pharmacovigilance
+/大疆|汪滔|灵眸|如影|\bDJI\b|\bRoboMaster\b|\bMavic\b|\bZenmuse\b/ => 大疆
 
-# ==============================================================================
-# BLOCK 2: 数据技术栈 (Data Tech Stack)
-# ==============================================================================
+/宇树|王兴兴|\bUnitree\b/ => 宇树机器人
 
-# R语言生态
-R Language
-RStudio
-Posit
-Positron
-Tidyverse
-Dplyr
-Ggplot2
-Shiny
-Quarto
-Renv
-Targets
-Bioconductor
+/智元|灵犀|稚晖君|彭志辉|AgiBot/ => 智元机器人
+/众擎|EngineAI|赵同阳/ => 众擎机器人
 
-# Python数据栈
-Python
-Pandas
-Polars
-NumPy
-SciPy
-Scikit-learn
-PyTorch
-TensorFlow
-Jupyter
-Poetry
-Conda
-Ruff
+/黑神话|冯骥/ => 黑神话悟空
 
-# 数据存储
-SQL
-PostgreSQL
-DuckDB
-SQLite
-Snowflake
-Databricks
-Data Lake
-Parquet
-Arrow
+/影之刃零|梁其伟/ => 影之刃零
 
-# ==============================================================================
-# BLOCK 3: AI 人工智能 (AI, LLM & Engineering)
-# ==============================================================================
+/三体|流浪地球|刘慈欣|郭帆/ => 三体/流浪地球
 
-# 大模型
-LLM
-Transformer
-GPT-4
-GPT-5
-Claude
-Gemini
-Llama
-Mistral
-DeepSeek
-Qwen
-Grok
-Mixture of Experts
-MoE
+申奥
 
-# AI工程化
-RAG
-Retrieval Augmented
-LangChain
-LlamaIndex
-Vector DB
-Pinecone
-Chroma
-Embedding
-Prompt Engineering
-Fine-tuning
-LoRA
-RLHF
+/京东|刘强东|\bJD\b|\bJingdong\b/ => 京东
 
-# AI智能体
-Agent
-Agentic
-AutoGPT
-CrewAI
-LangGraph
-Multi-agent
-Copilot
+/字节|张一鸣|梁汝波|抖音|\bByteDance\b|\bTikTok\b|\bDouyin\b|\bLark\b|\bCapCut\b/ => 字节跳动
 
-# 本地AI生成
-Ollama
-LM Studio
-vLLM
-GGUF
-AWQ
-GPTQ
-Quantization
-Local LLM
-Whisper
-Stable Diffusion
-Flux
-Midjourney
+/腾讯|鹅厂|马化腾|微信|QQ|天美|阅文集团|微众银行|\bTencent\b|\bPony Ma\b|\bWeChat\b|\bLightSpeed\b|\bWeBank\b/ => 腾讯
 
-# ==============================================================================
-# BLOCK 4: 独立开发与全栈 (Indie Dev & Fullstack)
-# ==============================================================================
+/qwen|minimax|glm/ => 国产开源模型
 
-# 前端技术
-React
-Next.js
-Vue
-Nuxt
-Svelte
-SolidJS
-Tailwind
-Shadcn
-Framer Motion
-Three.js
+/特斯拉|马斯克|\bTesla\b|\bElon Musk\b|\bCybertruck\b|\bModel 3\b|\bModel Y\b|\bModel S\b|\bModel X\b|\bFSD\b/ => 特斯拉
 
-# 后端服务
-Node.js
-TypeScript
-Bun
-Deno
-Supabase
-Firebase
-Appwrite
-PocketBase
-Prisma
-TRPC
+/英伟达|黄仁勋|\bNVIDIA\b|\bGeForce\b|\bRTX\b|\bCUDA\b|\bJensen Huang\b/ => 英伟达
+/苏姿丰|锐龙|霄龙|\bAMD\b|\bRyzen\b|\bEPYC\b|\bRadeon\b|\bLisa Su\b/ => AMD
 
-# 移动开发
-Flutter
-React Native
-SwiftUI
-Expo
-Kotlin
+/微软|\bMicrosoft\b|\bWindows\b|\bAzure\b|\bSatya Nadella\b|\bCopilot\b/ => 微软
+/谷歌|皮查伊|安卓|油管|\bGoogle\b|\bAlphabet\b|\bAndroid\b|\bChrome\b|\bYouTube\b|\bGemini\b|\bDeepMind\b|\bWaymo\b/ => 谷歌
+/库克|\biPhone\b|\biPad\b|\bMacBook\b|\biOS\b|\bVision Pro\b|\bAirPods\b|\bApple\b|\bTim Cook\b/ => 苹果
 
-# 商业化
-SaaS
-MicroSaaS
-Indie Hacker
-Build in Public
-Stripe
-Lemon Squeezy
-Paddle
-SEO
-Product Hunt
-MRR
-ARR
+/\bOpenAI\b|\bChatGPT\b|\bSora\b|\bDALL-E\b|\bSam Altman\b|\bGreg Brockman\b/ => OpenAI
+/\bAnthropic\b|\bClaude\b|\bDario Amodei\b/ => Claude
 
-# ==============================================================================
-# BLOCK 5: 开发者工具 (Dev Environment)
-# ==============================================================================
 
-# 开发工具
-VS Code
-VSCode
-Cursor
-Windsurf
-Zed Editor
-Neovim
-IntelliJ
-Fleet
-Kiro
-Trae
-Google Antigravity
+# ═══════════════════════════════════════════════════════════════
+#                         国家与地区
+# ═══════════════════════════════════════════════════════════════
 
-# 运维部署
-Docker
-Kubernetes
-K8s
-Podman
-CI/CD
-GitHub Actions
-Vercel
-Netlify
-Cloudflare
+[中国]
+国产
+中国
 
-# ==============================================================================
-# BLOCK 6: 计算机硬件与极客装备 (Hardware & Home Lab)
-# ==============================================================================
+[东亚]
+日本
+朝鲜
+韩国
 
-# 显卡算力
-NVIDIA
-GPU
-CUDA
-RTX 4090
-RTX 5090
-H100
-H800
-Blackwell
-AMD ROCm
-Ascend
-昇腾
+[北美]
+美国
+加拿大
 
-# 芯片架构
-Apple Silicon
-M3 Max
-M4 Chip
-Mac Studio
-Snapdragon X
-ARM
-RISC-V
-Intel Core
-Ryzen
+[西欧]
+法国
+英国
 
-# 极客硬件
-Home Lab
-Homelab
-NAS
-Synology
-Unraid
-TrueNAS
-Raspberry Pi
-Orange Pi
-Mini PC
-N100
-WiFi 7
-10GbE
+/俄罗斯|俄国/ => 俄罗斯
 
-# ==============================================================================
-# BLOCK 7: 科技媒体与行业趋势 (Tech Media & Industry Trends)
-# ==============================================================================
+印度
 
-# 产品评测
-Product Launch
-Tech Review
-Benchmark
-Teardown
-Unboxing
-First Look
-Hands-on
-产品发布
-评测
-拆解
 
-# 市场动态
-IPO
-Acquisition
-Merger
-Funding
-Venture Capital
-Valuation
-并购
-融资
-估值
-风险投资
+# ═══════════════════════════════════════════════════════════════
+#                         科技领域
+# ═══════════════════════════════════════════════════════════════
 
-# 科技政策
-Tech Policy
-Regulation
-Antitrust
-Privacy Law
-Data Protection
-Compliance
-科技政策
-监管
-反垄断
+[AI 相关]
+/(?<![a-zA-Z])ai(?![a-zA-Z])/
+人工智能
 
-# ==============================================================================
-# BLOCK 8: 新兴技术领域 (Emerging Technologies)
-# ==============================================================================
+[芯片]
+芯片
+光刻机
+半导体
 
-# 新兴计算
-Quantum Computing
-Quantum Supremacy
-Edge Computing
-Fog Computing
-量子计算
-边缘计算
+/水电|雅鲁藏布江/ => 水电
+/光伏|太阳能/ => 光伏
+核能
+能源
 
-# 区块链Web3
-Blockchain
-Web3
-DeFi
-NFT
-Smart Contract
-Ethereum
-Bitcoin
-Cryptocurrency
-区块链
-加密货币
+/自动驾驶|无人驾驶|智驾/ => 自动驾驶
 
-# 物联网
-IoT
-Internet of Things
-Smart Home
-Wearable
-Smart Watch
-物联网
-智能家居
-可穿戴设备
+机器人
+/机械狗|四足/ => 机器狗
+具身智能
 
-# ==============================================================================
-# BLOCK 9: 开源与社区 (Open Source & Community)
-# ==============================================================================
+/月球|登月|火星|宇宙|飞船|航天|空间站|卫星/ => 航天
 
-# 开源生态
-Open Source
-MIT License
-Apache License
-GPL
-GitHub
-GitLab
-开源
-开源许可
+# 前沿科技
+量子
+脑机
+基因
 
-# 开发者社区
-Developer Community
-Stack Overflow
-Reddit
-Discord
-Slack
-开发者社区
-技术社区
-
-# 开发协作
-Git
-Version Control
-Pull Request
-Code Review
-DevOps
-版本控制
-代码审查
-
-# ==============================================================================
-# BLOCK 10: 编程语言生态 (Programming Languages Ecosystem)
-# ==============================================================================
-
-# 系统编程语言
-Rust
-Go
-Golang
-C++
-Zig
-系统编程
-内存安全
-
-# Web开发语言
-JavaScript
-Angular
-前端框架
-后端框架
-
-# 移动开发语言
-Swift
-Dart
-移动开发
-跨平台开发
-
-# ==============================================================================
-# BLOCK 11: 数据存储与管理 (Data Storage & Management)
-# ==============================================================================
-
-# 关系型数据库
-MySQL
-Oracle
-SQL Server
-关系型数据库
-RDBMS
-
-# NoSQL数据库
-MongoDB
-Redis
-Cassandra
-DynamoDB
-Neo4j
-Graph Database
-NoSQL
-非关系型数据库
-
-# 搜索分析
-Elasticsearch
-Solr
-Apache Lucene
-Full-text Search
-全文搜索
-搜索引擎
-
-# ==============================================================================
-# BLOCK 12: 学术研究与科学计算 (Academic Research & Scientific Computing)
-# ==============================================================================
-
-# 学术出版
-arXiv
-Nature Journal
-Science Journal
-PLOS
-Peer Review
-Academic Publishing
-学术论文
-同行评议
-
-# 科学计算
-MATLAB
-Mathematica
-Julia
-Scientific Computing
-High Performance Computing
-HPC
-科学计算
-高性能计算
-
-# 研究方法
-Statistical Analysis
-Experimental Design
-Reproducible Research
-Open Science
-统计分析
-实验设计
-可重现研究
-
-# ==============================================================================
-# BLOCK 13: 新能源汽车与智能出行 (New Energy Vehicles & Smart Mobility)
-# ==============================================================================
-
-# 车企动态
-Tesla
-BYD
-Nio
-Xpeng
-Li Auto
-Xiaomi Auto
-Zeekr
-Rivian
-Lucid
-Polestar
-Toyota
-Volkswagen
-BMW
-Mercedes
-比亚迪
-蔚来
-小鹏
-理想
-小米汽车
-极氪
-鸿蒙智行
-特斯拉
-
-# 三电技术
-Battery
-Lithium
-Solid-state Battery
-Sodium-ion
-Blade Battery
-Qilin Battery
-800V
-SiC
-Charging Pile
-Supercharger
-电池
-固态电池
-刀片电池
-麒麟电池
-充电桩
-超充
-续航里程
-三电系统
-
-# 智能驾驶
-Autonomous Driving
-Self-driving
-FSD
-NOA
-Autopilot
-Pilot Assist
-L2+
-L3
-L4
-Robotaxi
-Waymo
-Apollo
-HarmonyOS Cockpit
-CarPlay
-Smart Cockpit
-自动驾驶
-智能座舱
-无人驾驶
-辅助驾驶
-智驾
-
-# ==============================================================================
-# BLOCK 14: 网络安全与隐私 (Cybersecurity & Privacy)
-# ==============================================================================
-
-# 攻击与防御
-Cybersecurity
-InfoSec
-Network Security
-Zero Day
-0-day
-Vulnerability
-Exploit
-Malware
-Ransomware
-Phishing
-DDoS
-APT
-Penetration Test
-Red Team
-Blue Team
-CTF
-网络安全
-信息安全
-漏洞
-勒索软件
-黑客
-
-# 安全运营
-SOC
-SIEM
-Threat Intelligence
-Incident Response
-Forensics
-Audit
-Risk Management
-威胁情报
-应急响应
-安全审计
-
+# 产业政策
+生产力
